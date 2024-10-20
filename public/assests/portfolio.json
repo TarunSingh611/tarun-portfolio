@@ -1,0 +1,75 @@
+ {
+    "aboutMe": {
+      "title": "About Me",
+      "professionalSummary": [
+        "I'm a results-driven Software Developer with a strong focus on Frontend technologies, including Next.js and React. My journey began with C++ and Python, eventually leading me to discover my passion for creating beautiful and functional web applications.",
+        "Currently working at Axtrum Solutions Pvt. Ltd. in Noida, I've had the opportunity to design and develop dynamic websites and custom web applications that solve real-world problems.",
+        "I'm constantly learning and expanding my skillset, with a particular interest in Backend development to become a more well-rounded developer."
+      ],
+      "image": {
+        "imgSrc": "/images/profile/Avatar.png",
+        "imgAlt": "Tarun Singh"
+      }
+    },
+    "experiences": [
+      {
+        "title": "Web Developer",
+        "company": "Axtrum Solutions Pvt. Ltd.",
+        "location": "Noida, U.P, India",
+        "period": "Sept 2023 – Present",
+        "description": [
+          "Designed and developed dynamic and responsive websites.",
+          "Developed custom web applications, resulting in tailored solutions for client needs.",
+          "Enhanced user experience by implementing responsive web design and optimizing website performance."
+        ]
+      },
+      {
+        "title": "Backend Developer Intern",
+        "company": "CodeQuotient",
+        "location": "Mohali, Punjab, India",
+        "period": "Apr 2023 – Aug 2023",
+        "description": [
+          "Developed foundational skills in web technologies including HTML, CSS, JavaScript, and C++.",
+          "Advanced to full-stack development with the MERN stack (MongoDB, Express.js, React.js, Node.js)."
+        ]
+      }
+    ],
+    "education": [
+      {
+        "degree": "Bachelor of Engineering in Computer Engineering",
+        "institution": "GCET Jammu",
+        "location": "Jammu and Kashmir",
+        "period": "Aug 2019 – Aug 2023"
+      }
+    ],
+    "skills": {
+      "languages": ["JavaScript", "C++", "Python", "HTML", "CSS"],
+      "frameworks": ["React", "Next.js", "Express", "Node.js"],
+      "libraries": ["Formik", "Redux"],
+      "databases": ["MongoDB", "MySQL"],
+      "tools": ["Visual Studio Code", "Git"]
+    },
+    "projects": [
+      {
+        "title": "AI Travel Planner",
+        "description": "A web application designed to generate detailed travel plans using AI models. It provides recommendations based on the city, state, and country chosen by the user.",
+        "techStack": ["Next.js", "TailwindCSS", "Vercel", "Git"],
+        "image": "/images/projects/AITravelPlanner.png",
+        "link": "https://ai-travel-planner-dun.vercel.app/"
+      },
+      {
+        "title": "Social Media App",
+        "description": "A dynamic social media application built using the MERN stack. Features include robust RESTful API supporting full CRUD operations for efficient user interactions and data management.",
+        "techStack": ["Node.js", "Express", "Redux", "MongoDB", "Next.js"],
+        "image": "/images/projects/SocialMediaApp.png",
+        "link": "https://social-sphere-six.vercel.app/"
+      }
+    ],
+    "contacts": {
+      "mail": "thakurtarun936@gmail.com",
+      "mobileNumber": "+91 7006072897",
+      "address": "Udhampur, Jammu and Kashmir, India",
+      "GmapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26799.015216543!2d75.1333!3d32.9167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391e80a5920c21df%3A0x4b0e8b0f53bc8ae5!2sUdhampur%2C%20Jammu%20and%20Kashmir!5e0!3m2!1sen!2sin!4v1630000000000!5m2!1sen!2sin"
+    }
+  }
+  
