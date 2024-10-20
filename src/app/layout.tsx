@@ -14,8 +14,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="bg-gray-50 dark:bg-gray-900">
         {children}
-      </body>
       <ToastContainer />
+      </body>
     </html>
   );
 }

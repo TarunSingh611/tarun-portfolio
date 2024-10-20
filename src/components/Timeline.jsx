@@ -38,13 +38,15 @@ export default function Timeline({experiences, education}) {
                   }`}
                 >
                   {/* Circle indicator */}
-                  <div className="absolute left-4 md:relative md:left-1/2 transform md:-translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 z-10"></div>
+                  <div className="absolute left-4 md:relative md:hidden transform md:-translate-x-1/2 w-6 h-6 rounded-full bg-blue-500 z-10"></div>
 
                   {/* Content container */}
                   <motion.div
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg md:w-1/2 w-full mt-8 md:mt-0 md:ml-8`}
+                    className={`bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg md:w-1/2 w-full mt-8 md:mt-0  ${
+                      index % 2 === 0 ? "md:mr-8" : "md:ml-8"
+                    }`}
                   >
                     <h3 className="text-xl font-bold mb-2">
                       {item?.title || item?.degree}
