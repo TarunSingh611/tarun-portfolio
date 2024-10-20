@@ -8,7 +8,7 @@ export default function ContactForm() {
     message: '',
   });
 
-  const handleSubmit = async (e:any) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -32,7 +32,7 @@ export default function ContactForm() {
     }
   };
 
-  const handleChange = (e:any) => {
+  const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,

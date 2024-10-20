@@ -14,7 +14,7 @@ export default function About({aboutMe}) {
                     <h2 className="text-4xl font-bold text-center mb-12">{aboutMe?.title}</h2>
                     <div className="grid md:grid-cols-2 gap-12 items-center">
                         <div className="space-y-6">
-                            {aboutMe?.professionalSummary?.map((summary)=>(<p className="text-lg text-gray-600 dark:text-gray-300">{summary}</p>))}
+                            {aboutMe?.professionalSummary?.map((summary,index)=>(<p key={index} className="text-lg text-gray-600 dark:text-gray-300">{summary}</p>))}
                         </div>
                         <div className="relative">
                             <div className="rounded-lg shadow-xl flex items-center justify-center">

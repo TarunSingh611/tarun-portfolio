@@ -67,7 +67,7 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
         >
           <h1 className="text-5xl md:text-7xl font-bold mb-4">
-            Hi, I'm <span className="text-blue-600">Tarun Singh</span>
+            Hi, I&apos;m <span className="text-blue-600">Tarun Singh</span>
           </h1>
           <h2 className="text-2xl md:text-3xl text-gray-600 mb-8">
             Software Developer specializing in Next.js and React

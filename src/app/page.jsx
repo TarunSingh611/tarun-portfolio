@@ -10,7 +10,7 @@ import Contact from '@/components/Contacts';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  const [portfolioData, setPortfolioData] = useState<any>(null);
+  const [portfolioData, setPortfolioData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
