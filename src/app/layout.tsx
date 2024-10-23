@@ -1,14 +1,12 @@
-// File: src/app/layout.js
 import { ReactNode } from 'react';
 import './globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import Head from 'next/head';
 
 export const metadata = {
   title: 'Tarun Singh - Software Developer',
   description:
-    'I\'m Tarun Singh, a results-driven software developer with expertise in frontend and backend technologies. Passionate about building dynamic, responsive applications using React, Next.js, and more.',
+    "I'm Tarun Singh, a results-driven software developer with expertise in frontend and backend technologies.",
   keywords:
     'Tarun Singh, Software Developer, Frontend Developer, Backend Developer, Portfolio, Full-Stack, React, Next.js',
   openGraph: {
@@ -31,22 +29,24 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <Head>
-        <meta name="google-site-verification" content="SpNrpA4epU_QtBEKJfm_beI121IrI1ORz8muVem-4nY" />
+      <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="UTF-8" />
         <meta name="author" content="Tarun Singh" />
-        <meta property="og:title" content="Tarun Singh - Software Developer" />
-        <meta
-          property="og:description"
-          content="Professional portfolio of Tarun Singh, showcasing projects, skills, and experiences."
-        />
+        <meta name="google-site-verification" content="SpNrpA4epU_QtBEKJfm_beI121IrI1ORz8muVem-4nY" />
+        
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta name="keywords" content={metadata.keywords} />
+        
+        <meta property="og:title" content={metadata.openGraph.title} />
+        <meta property="og:description" content={metadata.openGraph.description} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://tarunsinghrajput.netlify.app" />
-        <meta
-          property="og:image"
-          content="https://tarunsinghrajput.netlify.app/images/profile/Avatar.png"
-        />
+        <meta property="og:url" content={metadata.openGraph.url} />
+        <meta property="og:image" content={metadata.openGraph.images[0].url} />
+        <meta property="og:image:width" content="800" />
+        <meta property="og:image:height" content="600" />
+        <meta property="og:image:alt" content={metadata.openGraph.images[0].alt} />
 
         {/* JSON-LD Structured Data */}
         <script
@@ -60,8 +60,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               description:
                 "I'm a results-driven Software Developer with expertise in frontend technologies including React and Next.js.",
               url: "https://tarunsinghrajput.netlify.app",
-              image:
-                "https://tarunsinghrajput.netlify.app/images/profile/Avatar.png",
+              image: "https://tarunsinghrajput.netlify.app/images/profile/Avatar.png",
               sameAs: [
                 "https://www.linkedin.com/in/tarun-singh",
                 "https://github.com/tarunsingh611",
@@ -73,7 +72,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             }),
           }}
         />
-      </Head>
+      </head>
       <body className="bg-gray-50 dark:bg-gray-900">
         {children}
         <ToastContainer />
