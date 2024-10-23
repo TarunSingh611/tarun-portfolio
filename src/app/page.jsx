@@ -1,5 +1,3 @@
-'use client';
-import { useState, useEffect } from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
@@ -8,32 +6,27 @@ import Skills from '@/components/Skills';
 import Timeline from '@/components/Timeline';
 import Contact from '@/components/Contacts';
 import Footer from '@/components/Footer';
+import Head from 'next/head';
 
-export default function Home() {
-  const [portfolioData, setPortfolioData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+async function getPortfolioData() {
+  try {
+    const res = await fetch('https://tarunsingh611.github.io/CDN-oneServer/portfolio.json', {
+      cache: 'no-store', // Ensures fresh data every time (SSR behavior)
+    });
 
-  useEffect(() => {
-    // Fetch data from the GitHub Pages URL
-    fetch('https://tarunsingh611.github.io/CDN-oneServer/portfolio.json')
-      .then(response => response.json())
-      .then(data => {
-        setPortfolioData(data);
-        setIsLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching portfolio data:', error);
-        setIsLoading(false);
-      });
-  }, []);
+    if (!res.ok) {
+      throw new Error('Failed to fetch portfolio data');
+    }
 
-  if (isLoading) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
-        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
-      </div>
-    );
+    return res.json();
+  } catch (error) {
+    console.error('Error fetching portfolio data:', error);
+    return null; // Handle error case
   }
+}
+
+export default async function Home() {
+  const portfolioData = await getPortfolioData();
 
   if (!portfolioData) {
     return (
@@ -44,15 +37,26 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen">
-      <Navbar />
-      <Hero/>
-      <About aboutMe={portfolioData?.aboutMe} />
-      <Projects projects={portfolioData?.projects} />
-      <Skills skills={portfolioData?.skills} />
-      <Timeline experiences={portfolioData?.experiences} education={portfolioData?.education} />
-      <Contact contacts={portfolioData?.contacts} />
-      <Footer />
-    </main>
+    <>
+      <Head>
+        <title>Tarun Singh | Portfolio</title>
+        <meta name="description" content="Tarun Singh's Portfolio showcasing projects, skills, and experience." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main className="min-h-screen">
+        <Navbar />
+        <Hero />
+        <About aboutMe={portfolioData?.aboutMe} />
+        <Projects projects={portfolioData?.projects} />
+        <Skills skills={portfolioData?.skills} />
+        <Timeline
+          experiences={portfolioData?.experiences}
+          education={portfolioData?.education}
+        />
+        <Contact contacts={portfolioData?.contacts} />
+        <Footer />
+      </main>
+    </>
   );
 }
