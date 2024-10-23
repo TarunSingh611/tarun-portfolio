@@ -1,7 +1,7 @@
 // File: src/components/Projects.js
 import { motion } from 'framer-motion';
 
-export default function Projects({projects}) {
+export default function Projects({ projects }) {
   return (
     <section id="projects" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -39,12 +39,12 @@ export default function Projects({projects}) {
                       </span>
                     ))}
                   </div>
-                  project?.link && <a
+                  {project?.link && <a
                     href={project?.link}
                     className="text-blue-600 hover:text-blue-800 font-medium"
                   >
                     View Project →
-                  </a>
+                  </a>}
                 </div>
               </motion.div>
             ))}
