@@ -1,3 +1,4 @@
+'use client';
 // Continuing src/components/Footer.js
 const Footer = () => {
     return (

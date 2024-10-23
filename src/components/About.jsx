@@ -1,3 +1,4 @@
+'use client';
 // File: src/components/About.js
 import { motion } from 'framer-motion';
 

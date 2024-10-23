@@ -1,3 +1,4 @@
+'use client';
 // File: src/components/Contact.js
 import { motion } from 'framer-motion';
 import ContactForm from './ContactForm';
