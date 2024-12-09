@@ -98,7 +98,9 @@ export default function Projects({ projects }) {
                 {project?.techStack?.join(', ') || ''}
               </p>
               <button className="mt-4 w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500">
+                <a href={project?.link} target="_blank" rel="noopener noreferrer">
                 View Project
+                </a>
               </button>
             </>
           )}
