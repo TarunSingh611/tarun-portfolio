@@ -132,7 +132,7 @@ export default function Projects({ projects }) {
           </button>
 
           <AnimatePresence initial={false} custom={direction}>
-            <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-hidden">
+            <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-hidden p-4">
               <Card
                 project={getProjectAtOffset(-2)}
                 size="small"
