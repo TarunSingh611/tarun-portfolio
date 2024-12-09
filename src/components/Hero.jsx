@@ -15,7 +15,7 @@ export default function Hero() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 150; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
