@@ -27,8 +27,8 @@ export default function Projects({ projects }) {
   });
 
   const cardSizes = {
-    small: 'w-48 h-48 ',
-    medium: 'w-96 h-60',
+    small: 'w-48 h-32 ',  
+    medium: 'w-96 h-48 ',
     large: 'w-full h-full ',
   };
 
@@ -83,10 +83,10 @@ export default function Projects({ projects }) {
         <img
           src={project?.image}
           alt={project?.title}
-          className="w-full h-2/3 object-cover rounded-t-xl"
+          className={`w-full ${position==='active' ? 'h-2/3' : 'h-5/6'} object-cover rounded-t-xl`}
         />
-        <div className="p-4">
-          <h3 className="text-center text-lg font-semibold truncate">
+        <div className={`${position === 'active' ? 'p-6' : 'p-2'}`}>
+          <h3 className={`${position === 'active' ? 'text-lg' : 'text-xs'} text-center text-lg font-semibold truncate`}>
             {project?.title}
           </h3>
           {position === 'active' && (
@@ -94,7 +94,7 @@ export default function Projects({ projects }) {
               <p className="text-gray-600 dark:text-gray-300 text-sm mt-2 overflow-hidden text-ellipsis max-h-20">
                 {project?.description}
               </p>
-              <p className="text-sm mt-3 font-semibold text-blue-500 truncate">
+              <p className="text-xs mt-3 font-semibold text-blue-500 truncate">
                 {project?.techStack?.join(', ') || ''}
               </p>
               <button className="mt-4 w-full py-2 bg-blue-600 text-white rounded-md hover:bg-blue-500">
@@ -132,7 +132,9 @@ export default function Projects({ projects }) {
           </button>
 
           <AnimatePresence initial={false} custom={direction}>
-            <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-hidden p-4">
+            <div className="flex items-center space-x-2 sm:space-x-4 overflow-x-hidden p-4
+            
+            ">
               <Card
                 project={getProjectAtOffset(-2)}
                 size="small"

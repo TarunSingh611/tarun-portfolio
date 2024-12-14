@@ -1,12 +1,15 @@
+
+import dynamic from 'next/dynamic';
+import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import About from '@/components/About';
-import Projects from '@/components/Projects';
-import Skills from '@/components/Skills';
-import Timeline from '@/components/Timeline';
-import Contact from '@/components/Contacts';
 import Footer from '@/components/Footer';
-import Head from 'next/head';
+
+const About = dynamic(() => import('@/components/About'));
+const Projects = dynamic(() => import('@/components/Projects'));
+const Skills = dynamic(() => import('@/components/Skills'));
+const Timeline = dynamic(() => import('@/components/Timeline'));
+const Contact = dynamic(() => import('@/components/Contacts'));
 
 async function getPortfolioData() {
   try {
