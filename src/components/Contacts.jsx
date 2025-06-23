@@ -1,70 +1,204 @@
 'use client';
-// File: src/components/Contact.js
-import { motion } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';
+import { Mail, Phone, MapPin, MessageSquare } from 'lucide-react';
 import ContactForm from './ContactForm';
 
-export default function Contact({contacts}) {
+export default function Contact({ contacts }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: 'Email',
+      value: contacts?.mail,
+      href: `mailto:${contacts?.mail}`,
+      color: 'from-blue-500 to-cyan-500',
+      functional: true
+    },
+    {
+      icon: Phone,
+      label: 'Phone',
+      value: contacts?.mobileNumber,
+      href: `tel:${contacts?.mobileNumber}`,
+      color: 'from-green-500 to-emerald-500',
+      functional: true
+    }
+  ];
 
   return (
-    <section id="contact" className="py-20 bg-white dark:bg-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="relative py-20 overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800" />
+      
+      {/* Floating elements */}
+      <div className="absolute inset-0 overflow-hidden">
         <motion.div
+          className="absolute top-1/4 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.4, 0.2],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+        <motion.div
+          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-3xl"
+          animate={{
+            scale: [1.3, 1, 1.3],
+            opacity: [0.3, 0.5, 0.3],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </div>
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          ref={ref}
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold text-center mb-12">Get in Touch</h2>
-          
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-bold mb-4">Contact Information</h3>
-              <div className="space-y-4">
-                <p className="flex items-center">
-                  <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  <a href="mailto:thakurtarun936@gmail.com" className="text-gray-600 dark:text-gray-300">
-                    {contacts?.mail}
-                  </a>
-                </p>
-                <p className="flex items-center">
-                  <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
-                  <span className="text-gray-600 dark:text-gray-300">{contacts?.mobileNumber}</span>
-                </p>
-                <p className="flex items-center">
-                  <svg className="w-6 h-6 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span className="text-gray-600 dark:text-gray-300">{contacts?.address}</span>
-                </p>
-              </div>
-
-              <div className="mt-8">
-                <iframe
-                  src={contacts?.GmapLink}
-                  width="100%"
-                  height="300"
-                  style={{ border: 0 }}
-                  allowFullScreen=""
-                  loading="lazy"
-                  className="rounded-lg"
-                ></iframe>
-              </div>
-            </div>
-
-            <div>
-              <ContactForm/>
-            </div>
-          </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6"
+          >
+            <span className="text-gradient-primary">Get in Touch</span>
+          </motion.h2>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"
+          />
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mt-6"
+          >
+            Ready to collaborate on your next project? Let's discuss how we can bring your ideas to life.
+          </motion.p>
         </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Contact Information */}
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="space-y-8"
+          >
+            <div>
+              <h3 className="text-2xl sm:text-3xl font-bold mb-8 text-gradient-primary">
+                Let's Connect
+              </h3>
+              
+              {/* Contact Cards */}
+              <div className="space-y-6">
+                {contactInfo.map((info, index) => (
+                  <motion.a
+                    key={info.label}
+                    href={info.href}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    className="card-glass p-6 hover-lift group block"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className={`p-3 rounded-xl bg-gradient-to-br ${info.color} group-hover:scale-110 transition-transform duration-300`}>
+                        <info.icon className="w-6 h-6 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                          {info.label}
+                        </h4>
+                        <p className="text-gray-700 dark:text-gray-400 text-sm sm:text-base">
+                          {info.value}
+                        </p>
+                      </div>
+                      <div className="text-gray-500 dark:text-gray-400 group-hover:text-blue-500 transition-colors duration-300">
+                        <Mail className="w-5 h-5" />
+                      </div>
+                    </div>
+                  </motion.a>
+                ))}
+
+                {/* Location Info (Non-clickable) */}
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ duration: 0.6, delay: 0.7 }}
+                  className="card-glass p-6"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
+                      <MapPin className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-gray-800 dark:text-gray-200 mb-1">
+                        Location
+                      </h4>
+                      <p className="text-gray-700 dark:text-gray-400 text-sm sm:text-base">
+                        {contacts?.address}
+                      </p>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Map */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="card-glass p-4"
+            >
+              <iframe
+                src={contacts?.GmapLink}
+                width="100%"
+                height="250"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+                className="rounded-lg w-full"
+                title="Location Map"
+              />
+            </motion.div>
+          </motion.div>
+
+          {/* Contact Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="card-glass p-8"
+          >
+            <div className="flex items-center gap-3 mb-8">
+              <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500 to-purple-600">
+                <MessageSquare className="w-6 h-6 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-gray-200">
+                Send Message
+              </h3>
+            </div>
+            <ContactForm />
+          </motion.div>
+        </div>
       </div>
     </section>
   );
 }
-
-
-

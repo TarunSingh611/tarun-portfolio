@@ -1,93 +1,306 @@
-// File: src/components/Hero.js
-'use client';
-import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+"use client";
+import { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { Download, Mail, Linkedin, Github, Twitter, Instagram, ExternalLink } from "lucide-react";
+import { downloadCV } from "../lib/cvGenerator";
 
-export default function Hero() {
-  const particlesRef = useRef(null);
+const Hero = ({ portfolioData }) => {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  const texts = [
+    "Full Stack",
+    "React",
+    "Next.js",
+    "MERN Stack",
+  ];
 
   useEffect(() => {
-    const canvas = particlesRef.current;
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-    
-    const init = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      
-      for (let i = 0; i < 150; i++) {
-        particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 2 + 1,
-          speedX: Math.random() * 2 - 1,
-          speedY: Math.random() * 2 - 1
-        });
-      }
-    };
-
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      particles.forEach(particle => {
-        particle.x += particle.speedX;
-        particle.y += particle.speedY;
-        
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.y > canvas.height) particle.y = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        
-        ctx.beginPath();
-        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(66, 153, 225, 0.5)';
-        ctx.fill();
+    const handleMouseMove = (e) => {
+      setMousePosition({
+        x: e.clientX / window.innerWidth,
+        y: e.clientY / window.innerHeight,
       });
-      
-      requestAnimationFrame(animate);
     };
 
-    init();
-    animate();
-
-    window.addEventListener('resize', init);
-    return () => window.removeEventListener('resize', init);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
+  useEffect(() => {
+    const currentText = texts[currentTextIndex];
+    const typingSpeed = isDeleting ? 50 : 100;
+    const deletingSpeed = 50;
+
+    if (!isDeleting && displayText === currentText) {
+      setTimeout(() => setIsDeleting(true), 2000);
+      return;
+    }
+
+    if (isDeleting && displayText === "") {
+      setIsDeleting(false);
+      setCurrentTextIndex((prev) => (prev + 1) % texts.length);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      if (isDeleting) {
+        setDisplayText(currentText.substring(0, displayText.length - 1));
+      } else {
+        setDisplayText(currentText.substring(0, displayText.length + 1));
+      }
+    }, isDeleting ? deletingSpeed : typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [displayText, isDeleting, currentTextIndex, texts]);
+
+  const handleDownloadCV = async () => {
+    setIsDownloading(true);
+    try {
+      await downloadCV(portfolioData);
+    } catch (error) {
+      console.error('Error downloading CV:', error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById("about");
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  // If no portfolio data, show loading
+  if (!portfolioData) {
+    return (
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-400 mx-auto mb-4"></div>
+          <p className="text-gray-300 text-lg">Loading portfolio data...</p>
+        </div>
+      </section>
+    );
+  }
+
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden">
-      <canvas
-        ref={particlesRef}
-        className="absolute inset-0 z-0"
+    <section
+      ref={ref}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+    >
+      {/* Floating Particles */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-white/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -100, 0],
+              opacity: [0, 1, 0],
+            }}
+            transition={{
+              duration: Math.random() * 3 + 2,
+              repeat: Infinity,
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Gradient Orbs */}
+      <motion.div
+        className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full blur-3xl"
+        animate={{
+          x: [0, 50, 0],
+          y: [0, -50, 0],
+        }}
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
       />
-      <div className="relative z-10 text-center">
+      <motion.div
+        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 rounded-full blur-3xl"
+        animate={{
+          x: [0, -50, 0],
+          y: [0, 50, 0],
+        }}
+        transition={{
+          duration: 25,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+
+      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
+          className="space-y-8"
         >
-          <h1 className="text-5xl md:text-7xl font-bold mb-4">
-            Hi, I&apos;m <span className="text-blue-600">Tarun Singh</span>
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-gray-600 mb-8">
-            Software Developer specializing in Next.js and React
-          </h2>
-          <div className="flex justify-center gap-4">
-            <a
-              href="#contact"
-              className="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition-colors"
+          {/* Profile Image */}
+
+          {/* Name and Title */}
+          <div className="space-y-4">
+            <motion.h1
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
-              Get in Touch
-            </a>
-            <a
-              href="#projects"
-              className="border-2 border-blue-600 text-blue-600 px-8 py-3 rounded-full hover:bg-blue-50 transition-colors"
+              {portfolioData.personal.name}
+            </motion.h1>
+            
+            <motion.div
+              className="text-xl sm:text-2xl lg:text-3xl font-medium text-gray-300"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.4 }}
             >
-              View Projects
-            </a>
+              <span className="text-white">I'm a </span>
+              <span className="text-purple-400 min-h-[2rem] inline-block">
+                {displayText}
+                <span className="animate-pulse">|&nbsp;</span>
+              </span>
+              <span className="text-white">Developer</span>
+            </motion.div>
           </div>
+
+          {/* Description */}
+          <motion.p
+            className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
+            {portfolioData.aboutMe.summary}
+          </motion.p>
+
+          {/* Action Buttons */}
+          <motion.div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
+            <button
+              onClick={handleDownloadCV}
+              disabled={isDownloading}
+              className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isDownloading ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Generating CV...
+                </div>
+              ) : (
+                <div className="flex items-center gap-2">
+                  <Download className="w-5 h-5" />
+                  Download CV
+                </div>
+              )}
+            </button>
+
+            <button
+              onClick={scrollToAbout}
+              className="group relative px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-105 transition-all duration-300"
+            >
+              Learn More
+            </button>
+          </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            className="flex justify-center items-center gap-6 pt-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 1.0 }}
+          >
+            <a
+              href={`mailto:${portfolioData.personal.email}`}
+              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              aria-label="Email"
+            >
+              <Mail className="w-5 h-5 text-white group-hover:text-purple-300" />
+            </a>
+            
+            <a
+              href={`https://${portfolioData.personal.linkedin}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-5 h-5 text-white group-hover:text-purple-300" />
+            </a>
+            
+            <a
+              href={`https://${portfolioData.personal.github}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              aria-label="GitHub"
+            >
+              <Github className="w-5 h-5 text-white group-hover:text-purple-300" />
+            </a>
+            
+            <a
+              href={`https://${portfolioData.personal.twitter}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              aria-label="Twitter"
+            >
+              <Twitter className="w-5 h-5 text-white group-hover:text-purple-300" />
+            </a>
+            
+            <a
+              href={`https://${portfolioData.personal.instagram}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-5 h-5 text-white group-hover:text-purple-300" />
+            </a>
+          </motion.div>
         </motion.div>
       </div>
-    </div>
+
+      {/* Scroll Indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+      >
+        <motion.div
+          className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+        >
+          <motion.div
+            className="w-1 h-3 bg-white/60 rounded-full mt-2"
+            animate={{ y: [0, 12, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+        </motion.div>
+      </motion.div>
+    </section>
   );
-}
+};
+
+export default Hero; 
