@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 
 const GamificationContext = createContext();
 
@@ -43,46 +43,6 @@ export const GamificationProvider = ({ children }) => {
     secretClick: false,
     rapidClicks: 0,
   });
-
-  // Track section visibility
-  const markSectionVisited = useCallback((section) => {
-    setProgress(prev => {
-      if (!prev[section]) {
-        const newProgress = { ...prev, [section]: true };
-        const sectionsVisited = Object.values(newProgress).filter(Boolean).length;
-        
-        // Update stats
-        setStats(prevStats => ({
-          ...prevStats,
-          sectionsVisited,
-          interactions: prevStats.interactions + 1,
-        }));
-
-        // Check for achievements
-        if (sectionsVisited === 5) {
-          unlockAchievement('exploredAll');
-        }
-
-        return newProgress;
-      }
-      return prev;
-    });
-  }, [unlockAchievement]);
-
-  // Unlock achievements
-  const unlockAchievement = useCallback((achievement) => {
-    setAchievements(prev => {
-      if (!prev[achievement]) {
-        const newAchievements = { ...prev, [achievement]: true };
-        
-        // Show achievement notification
-        showAchievementNotification(achievement);
-        
-        return newAchievements;
-      }
-      return prev;
-    });
-  }, [showAchievementNotification]);
 
   // Show achievement notification
   const showAchievementNotification = useCallback((achievement) => {
@@ -139,6 +99,46 @@ export const GamificationProvider = ({ children }) => {
       }, 500);
     }, 3000);
   }, []);
+
+  // Unlock achievements
+  const unlockAchievement = useCallback((achievement) => {
+    setAchievements(prev => {
+      if (!prev[achievement]) {
+        const newAchievements = { ...prev, [achievement]: true };
+        
+        // Show achievement notification
+        showAchievementNotification(achievement);
+        
+        return newAchievements;
+      }
+      return prev;
+    });
+  }, [showAchievementNotification]);
+
+  // Track section visibility
+  const markSectionVisited = useCallback((section) => {
+    setProgress(prev => {
+      if (!prev[section]) {
+        const newProgress = { ...prev, [section]: true };
+        const sectionsVisited = Object.values(newProgress).filter(Boolean).length;
+        
+        // Update stats
+        setStats(prevStats => ({
+          ...prevStats,
+          sectionsVisited,
+          interactions: prevStats.interactions + 1,
+        }));
+
+        // Check for achievements
+        if (sectionsVisited === 5) {
+          unlockAchievement('exploredAll');
+        }
+
+        return newProgress;
+      }
+      return prev;
+    });
+  }, [unlockAchievement]);
 
   // Track scroll depth
   useEffect(() => {

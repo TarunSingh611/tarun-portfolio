@@ -33,10 +33,46 @@ const FloatingElements = () => {
         size: isMobile ? Math.random() * 15 + 8 : Math.random() * 20 + 10,
         speed: Math.random() * 2 + 1,
         direction: Math.random() * 360,
+        createdAt: Date.now(),
+        lastDirectionChange: Date.now(),
       });
     }
     return newElements;
   }, [icons, emojis]);
+
+  // Function to change direction when element reaches edge or after 30 seconds
+  const shouldChangeDirection = useCallback((element) => {
+    const now = Date.now();
+    const timeSinceLastChange = now - element.lastDirectionChange;
+    const timeSinceCreation = now - element.createdAt;
+    
+    // Change direction after 30 seconds
+    if (timeSinceCreation > 30000) {
+      return true;
+    }
+    
+    // Change direction if it's been more than 5 seconds since last change and element is near edge
+    if (timeSinceLastChange > 5000) {
+      const edgeThreshold = 50; // pixels from edge
+      const isNearEdge = 
+        element.x <= edgeThreshold || 
+        element.x >= window.innerWidth - edgeThreshold ||
+        element.y <= 100 + edgeThreshold || 
+        element.y >= window.innerHeight - edgeThreshold;
+      
+      return isNearEdge;
+    }
+    
+    return false;
+  }, []);
+
+  // Function to generate new direction
+  const generateNewDirection = useCallback(() => {
+    // Generate a direction that's somewhat different from current direction
+    const baseDirection = Math.random() * 360;
+    const variation = (Math.random() - 0.5) * 120; // ±60 degrees variation
+    return (baseDirection + variation + 360) % 360;
+  }, []);
 
   useEffect(() => {
     if (!mounted) return;
@@ -63,7 +99,7 @@ const FloatingElements = () => {
           };
         })
       );
-    }, 300); // Changed to 300ms for smooth movement without performance issues
+    }, 50); // Changed to 300ms for smooth movement without performance issues
 
     return () => clearInterval(interval);
   }, [mounted, createElements]);

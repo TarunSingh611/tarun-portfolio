@@ -2,10 +2,10 @@
 // Uses CDN data to generate dynamic CVs
 
 export const generateCVFromData = (portfolioData) => {
-  const currentDate = new Date().toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
   });
 
   return {
@@ -207,6 +207,21 @@ export const downloadCV = async (portfolioData) => {
     
     document.body.appendChild(tempDiv);
     
+    // Step 1: Get block-level breakpoints from DOM elements
+    const blockElements = tempDiv.querySelectorAll('p, div, section, ul, li, table, h1, h2, h3, h4, h5, h6');
+    const breakpoints = [];
+
+    blockElements.forEach((el) => {
+      const rect = el.getBoundingClientRect();
+      const relativeTop = el.offsetTop;
+      if (!breakpoints.includes(relativeTop)) {
+        breakpoints.push(relativeTop);
+      }
+    });
+
+    // Sort breakpoints and ensure we include canvas bottom
+    breakpoints.sort((a, b) => a - b);
+    
     // Import jsPDF and html2canvas dynamically
     const [jsPDF, html2canvas] = await Promise.all([
       import('jspdf'),
@@ -229,24 +244,95 @@ export const downloadCV = async (portfolioData) => {
     
     // Create PDF
     const pdf = new jsPDFClass('p', 'mm', 'a4');
-    const imgData = canvas.toDataURL('image/png');
     
+    // Define dimensions
     const pdfWidth = pdf.internal.pageSize.getWidth();
     const pdfHeight = pdf.internal.pageSize.getHeight();
-    const imgWidth = pdfWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
     
-    let heightLeft = imgHeight;
-    let position = 0;
+    const marginTop = 0;     // safe top margin
+    const marginBottom = 10;  // safe bottom margin
+    const marginLeft = 10;
+    const marginRight = 10;
     
-    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-    heightLeft -= pdfHeight;
+    const contentHeight = pdfHeight - marginTop - marginBottom;
+    const imgWidth = pdfWidth - marginLeft - marginRight;
     
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
+    // Calculate scale factor and adjust breakpoints for canvas scale
+    const scaleFactor = imgWidth / canvas.width;
+    const maxPageHeightPx = contentHeight / scaleFactor;
+    
+    // Simple and reliable page breaking using fixed line height
+    const lineHeight = 24; // Approximate line height in pixels (scaled)
+    const minGap = 40; // Minimum gap between pages in pixels
+    
+    // Calculate how many complete lines we can fit per page
+    const availableHeight = maxPageHeightPx - minGap;
+    const linesPerPage = Math.floor(availableHeight / lineHeight);
+    const safePageHeight = linesPerPage * lineHeight;
+    
+    console.log('Canvas height:', canvas.height);
+    console.log('Max page height (px):', maxPageHeightPx);
+    console.log('Lines per page:', linesPerPage);
+    console.log('Safe page height:', safePageHeight);
+    
+    // Generate pages using fixed line height approach
+    let pageNumber = 1;
+    let currentY = 0;
+
+    while (currentY < canvas.height) {
+      // Calculate break point using fixed line height
+      let nextBreak = currentY + safePageHeight;
+      
+      // Ensure we don't exceed canvas height
+      nextBreak = Math.min(nextBreak, canvas.height);
+      
+      // Ensure we have some content on this page
+      if (nextBreak <= currentY) {
+        nextBreak = Math.min(currentY + maxPageHeightPx, canvas.height);
+      }
+
+      const pageHeight = nextBreak - currentY;
+      
+      console.log(`Page ${pageNumber}: currentY=${currentY}, nextBreak=${nextBreak}, pageHeight=${pageHeight}`);
+
+      const pageCanvas = document.createElement('canvas');
+      pageCanvas.width = canvas.width;
+      pageCanvas.height = pageHeight;
+      const context = pageCanvas.getContext('2d');
+
+      context.fillStyle = 'white';
+      context.fillRect(0, 0, pageCanvas.width, pageCanvas.height);
+
+      context.drawImage(
+        canvas,
+        0,
+        currentY,
+        canvas.width,
+        pageHeight,
+        0,
+        0,
+        canvas.width,
+        pageHeight
+      );
+
+      const pageImgData = pageCanvas.toDataURL('image/png');
+      const pageHeightMm = pageHeight * scaleFactor;
+
+      if (pageNumber > 1) pdf.addPage();
+      pdf.addImage(pageImgData, 'PNG', marginLeft, marginTop, imgWidth, pageHeightMm);
+
+      pdf.setFontSize(8);
+      pdf.setTextColor(128, 128, 128);
+      pdf.text(`Page ${pageNumber}`, pdfWidth / 2, pdfHeight - 5, { align: 'center' });
+
+      currentY = nextBreak;
+      pageNumber++;
+      
+      // Safety check to prevent infinite loop
+      if (pageNumber > 10) {
+        console.warn('Too many pages, stopping for safety');
+        break;
+      }
     }
     
     // Download PDF
