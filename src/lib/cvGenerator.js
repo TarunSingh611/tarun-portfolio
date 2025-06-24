@@ -212,7 +212,6 @@ export const downloadCV = async (portfolioData) => {
     const breakpoints = [];
 
     blockElements.forEach((el) => {
-      const rect = el.getBoundingClientRect();
       const relativeTop = el.offsetTop;
       if (!breakpoints.includes(relativeTop)) {
         breakpoints.push(relativeTop);
