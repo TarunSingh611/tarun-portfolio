@@ -2,13 +2,15 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, Code } from 'lucide-react';
+import { Menu, X, Sun, Moon, Code, Trophy } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useGamification } from './GamificationContext';
 
 export default function Navbar({ personal }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { achievements } = useGamification();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -111,6 +113,18 @@ export default function Navbar({ personal }) {
 
             {/* Right side buttons */}
             <div className="flex items-center space-x-4">
+              {/* Achievement indicator */}
+              {achievements.exploredAll && (
+                <motion.div
+                  initial={{ scale: 0 }}
+                  animate={{ scale: 1 }}
+                  className="hidden sm:flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-yellow-400 to-orange-500 text-white text-xs font-medium rounded-full"
+                >
+                  <Trophy className="w-3 h-3" />
+                  <span>Complete!</span>
+                </motion.div>
+              )}
+
               {/* Dark mode toggle */}
               <motion.button
                 whileHover={{ scale: 1.1 }}

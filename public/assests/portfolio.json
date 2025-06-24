@@ -1,75 +1,142 @@
- {
-    "aboutMe": {
-      "title": "About Me",
-      "professionalSummary": [
-        "I'm a results-driven Software Developer with a strong focus on Frontend technologies, including Next.js and React. My journey began with C++ and Python, eventually leading me to discover my passion for creating beautiful and functional web applications.",
-        "Currently working at Axtrum Solutions Pvt. Ltd. in Noida, I've had the opportunity to design and develop dynamic websites and custom web applications that solve real-world problems.",
-        "I'm constantly learning and expanding my skillset, with a particular interest in Backend development to become a more well-rounded developer."
-      ],
-      "image": {
-        "imgSrc": "/images/profile/Avatar.png",
-        "imgAlt": "Tarun Singh"
-      }
-    },
-    "experiences": [
-      {
-        "title": "Web Developer",
-        "company": "Axtrum Solutions Pvt. Ltd.",
-        "location": "Noida, U.P, India",
-        "period": "Sept 2023 – Present",
-        "description": [
-          "Designed and developed dynamic and responsive websites.",
-          "Developed custom web applications, resulting in tailored solutions for client needs.",
-          "Enhanced user experience by implementing responsive web design and optimizing website performance."
-        ]
-      },
-      {
-        "title": "Backend Developer Intern",
-        "company": "CodeQuotient",
-        "location": "Mohali, Punjab, India",
-        "period": "Apr 2023 – Aug 2023",
-        "description": [
-          "Developed foundational skills in web technologies including HTML, CSS, JavaScript, and C++.",
-          "Advanced to full-stack development with the MERN stack (MongoDB, Express.js, React.js, Node.js)."
-        ]
-      }
-    ],
-    "education": [
-      {
-        "degree": "Bachelor of Engineering in Computer Engineering",
-        "institution": "GCET Jammu",
-        "location": "Jammu and Kashmir",
-        "period": "Aug 2019 – Aug 2023"
-      }
-    ],
-    "skills": {
-      "languages": ["JavaScript", "C++", "Python", "HTML", "CSS"],
-      "frameworks": ["React", "Next.js", "Express", "Node.js"],
-      "libraries": ["Formik", "Redux"],
-      "databases": ["MongoDB", "MySQL"],
-      "tools": ["Visual Studio Code", "Git"]
-    },
-    "projects": [
-      {
-        "title": "AI Travel Planner",
-        "description": "A web application designed to generate detailed travel plans using AI models. It provides recommendations based on the city, state, and country chosen by the user.",
-        "techStack": ["Next.js", "TailwindCSS", "Vercel", "Git"],
-        "image": "/images/projects/AITravelPlanner.png",
-        "link": "https://ai-travel-planner-dun.vercel.app/"
-      },
-      {
-        "title": "Social Media App",
-        "description": "A dynamic social media application built using the MERN stack. Features include robust RESTful API supporting full CRUD operations for efficient user interactions and data management.",
-        "techStack": ["Node.js", "Express", "Redux", "MongoDB", "Next.js"],
-        "image": "/images/projects/SocialMediaApp.png",
-        "link": "https://social-sphere-six.vercel.app/"
-      }
-    ],
-    "contacts": {
-      "mail": "thakurtarun936@gmail.com",
-      "mobileNumber": "+91 7006072897",
-      "address": "Udhampur, Jammu and Kashmir, India",
-      "GmapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26799.015216543!2d75.1333!3d32.9167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391e80a5920c21df%3A0x4b0e8b0f53bc8ae5!2sUdhampur%2C%20Jammu%20and%20Kashmir!5e0!3m2!1sen!2sin!4v1630000000000!5m2!1sen!2sin"
-    }
+{  "personal": {
+  "name": "TARUN SINGH",
+  "title": "FULL STACK DEVELOPER",
+  "email": "tarunsrajput25@gmail.com",
+  "linkedin": "linkedin.com/in/tarun-singh-rajput",
+  "github": "github.com/tarunsingh611",
+  "twitter": "x.com/tarun__sr",
+  "instagram": "instagram.com/s.tarun_rajput",
+  "location": "India",
+  "website": "https://tarunsinghrajput.netlify.app"
+},
+"aboutMe": {
+  "title": "About Me",
+  "professionalSummary": [
+    "I am Tarun Singh, a passionate and results-driven Software Developer and Software Engineer specializing in Frontend and Full Stack Development with expertise in Next.js, React, and scalable web architectures. I started with C++ and Python, and over time have built a strong command over modern web technologies, delivering production-grade applications across diverse industries.",
+    "Currently, I am contributing as a Software Engineer at DataNexify, where I architect and ship full-featured SaaS applications for platforms like Monday.com, focusing on workflow automation, cloud integrations, and user-centric functionality. My previous experience at Axtrum Solutions involved driving high-impact feature releases that boosted user satisfaction and performance metrics.",
+    "Proficient in the MERN stack and familiar with DevOps workflows, I continuously work to improve system scalability, performance, and maintainability. I value clean code, collaborative development, and solving real-world problems through intelligent digital solutions."
+  ],
+  "summary":"Passionate Full Stack Software Engineer with 2.5+ years of experience specializing in Next.js, React, and scalable web architectures. Currently contributing at DataNexify, architecting full-featured SaaS applications with focus on workflow automation and cloud integrations. Proven track record of delivering high-quality, performant web applications and leading development teams.",
+  "image": {
+    "imgSrc": "/images/profile/Avatar.png",
+    "imgAlt": "Tarun Singh"
   }
-  
+},
+"experiences": [
+  {
+    "title": "Software Engineer – MERN Stack Developer",
+    "company": "DataNexify",
+    "location": "Remote",
+    "period": "Jan 2025 – Present",
+    "description": [
+      "Engineered and deployed high-traffic Monday.com marketplace applications focused on automation and cloud interoperability.",
+      "Developed the PDF Builder App with real-time dynamic document generation used by over 1,000 users.",
+      "Built robust integrations with Google Calendar and Drive using secure OAuth2 workflows and field mapping.",
+      "Enhanced subitem-level workflow automation using logic-based rule configurations for complex use cases.",
+      "Improved authentication layers and implemented rate-limited API interactions to ensure platform stability."
+    ]
+  },
+  {
+    "title": "Full Stack Developer – MERN Stack, Next.js",
+    "company": "Axtrum Solutions Pvt. Ltd.",
+    "location": "Noida, U.P., India",
+    "period": "Sept 2023 – Dec 2024",
+    "description": [
+      "Delivered custom web applications that improved client outcomes and increased user satisfaction scores by 30%.",
+      "Led implementation of responsive UI and performance optimization strategies, boosting engagement by 25%.",
+      "Adopted agile methodologies to accelerate project delivery, reducing launch timelines by 30%.",
+      "Collaborated cross-functionally to integrate APIs, handle state management, and ensure seamless frontend-backend coordination."
+    ]
+  },
+  {
+    "title": "Backend Developer Intern",
+    "company": "CodeQuotient",
+    "location": "Mohali, Punjab, India",
+    "period": "Apr 2023 – Aug 2023",
+    "description": [
+      "Gained full-stack development exposure while working on live projects involving MERN stack and MySQL.",
+      "Built and maintained reusable modules and integrated client feedback loops to improve UX on legacy applications.",
+      "Participated in the full SDLC with senior developers, contributing to backend architecture and database modeling."
+    ]
+  }
+],
+"education": [
+  {
+    "degree": "Bachelor of Engineering in Computer Engineering",
+    "institution": "GCET Jammu",
+    "location": "Jammu and Kashmir",
+    "period": "Aug 2019 – Aug 2023"
+  },
+  {
+    "degree": "SSC, Non-Medical",
+    "institution": "Army Public School, Udhampur",
+    "location": "Jammu and Kashmir",
+    "period": "2018 – 2019"
+  }
+],
+"skills": {
+  "languages": ["JavaScript", "TypeScript", "C++", "Python", "HTML", "CSS"],
+  "frameworks": ["React", "Next.js", "Express", "Node.js", "Tailwind CSS"],
+  "libraries": ["Redux", "React Query", "Formik", "Yup", "Framer Motion", "Prisma"],
+  "databases": ["MongoDB", "MySQL", "Firebase"],
+  "tools": ["Git", "GitHub", "Visual Studio Code", "Postman", "Vercel", "AWS (EC2, S3, IAM)", "Cursor"],
+  "platforms": ["Monday.com SDK", "Google APIs (Calendar, Drive)", "REST APIs", "OAuth2"]
+},
+"projects": [
+  {
+    "title": "Monday.com Marketplace Apps",
+    "description": "Production-level workflow automation apps for Monday.com including PDF Builder, Google Calendar Sync, and Drive Sync. Features include OAuth2 security, custom field mapping, and real-time sync with robust error handling.",
+    "techStack": ["MongoDB", "Express", "React", "Node.js", "AWS", "OAuth2", "REST", "Monday.com SDK"],
+    "image": "/images/projects/MondayMarketplaceApp.png",
+    "link": ""
+  },
+  {
+    "title": "BetterCommerce E-Commerce Platforms",
+    "description": "High-performance e-commerce storefronts with features like dynamic product catalogs, order processing, custom checkout flows, and DaMENSCH.com enhancements (size filters, return workflows).",
+    "techStack": ["Next.js", "React", "Node.js", "TailwindCSS", "AWS"],
+    "image": "/images/projects/BetterCommerce.png",
+    "link": ""
+  },
+  {
+    "title": "AI-Powered Content Management Platform",
+    "description": "A comprehensive content management platform leveraging AI to enhance UX and streamline content workflows. It features intelligent content suggestions, analytics dashboard, and real-time updates built on a robust frontend architecture.",
+    "techStack": ["Next.js", "Tailwind CSS", "TypeScript", "Firebase", "Prisma", "MongoDB", "React"],
+    "image": "/images/projects/AIContentPlatform.png",
+    "link": "https://content-platform-pink.vercel.app"
+  },
+  {
+    "title": "Recipe Maker: AI-Powered Recipe Generator",
+    "description": "A personalized recipe generation tool powered by Gemini AI, offering ingredient-based recommendations with a modern and responsive UI. Designed for optimal usability and customization.",
+    "techStack": ["React", "Tailwind CSS", "TypeScript", "Gemini API", "React Context"],
+    "image": "/images/projects/RecipeMaker.png",
+    "link": "https://recipe-generator-drab.vercel.app"
+  },
+  {
+    "title": "Pizza Order Online",
+    "description": "A responsive pizza ordering application with full authentication, REST APIs, cart management, and streamlined UX. Reduced average checkout time by 15 seconds based on user testing insights.",
+    "techStack": ["Node.js", "Express", "Redux", "MongoDB", "React.js"],
+    "image": "/images/projects/PizzaFleetApp.png",
+    "link": "https://pizza-web-gold.vercel.app/"
+  },
+  {
+    "title": "Social Media App",
+    "description": "Built a scalable social media application featuring complete CRUD APIs, real-time updates, and optimized server response time (reduced from 300ms to 150ms) based on load testing.",
+    "techStack": ["Node.js", "Express", "Redux", "MongoDB", "Next.js"],
+    "image": "/images/projects/SocialMediaApp.png",
+    "link": "https://social-sphere-six.vercel.app/"
+  },
+  {
+    "title": "AI Travel Planner",
+    "description": "AI-powered travel planning app providing location-based itineraries. Integrates OpenAI APIs with serverless deployment, designed for real-time responsiveness and clean UX.",
+    "techStack": ["Next.js", "TailwindCSS", "Vercel", "Git"],
+    "image": "/images/projects/AITravelPlanner.png",
+    "link": "https://ai-travel-planner-dun.vercel.app/"
+  }
+],
+"contacts": {
+  "mail": "thakurtarun936@gmail.com",
+  "mobileNumber": "+91 7006072897",
+  "address": "Udhampur, Jammu and Kashmir, India",
+  "GmapLink": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d26799.015216543!2d75.1333!3d32.9167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391e80a5920c21df%3A0x4b0e8b0f53bc8ae5!2sUdhampur%2C%20Jammu%20and%20Kashmir!5e0!3m2!1sen!2sin!4v1630000000000!5m2!1sen!2sin"
+}
+}

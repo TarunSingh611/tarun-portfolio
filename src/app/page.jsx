@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import { GamificationProvider } from '@/components/GamificationContext';
 
 const About = dynamic(() => import('@/components/About'));
 const Projects = dynamic(() => import('@/components/Projects'));
@@ -10,6 +11,8 @@ const Skills = dynamic(() => import('@/components/Skills'));
 const Timeline = dynamic(() => import('@/components/Timeline'));
 const Contact = dynamic(() => import('@/components/Contacts'));
 const ThreeDBackground = dynamic(() => import('@/components/3DBackground'), { ssr: false });
+const ProgressTracker = dynamic(() => import('@/components/ProgressTracker'), { ssr: false });
+const FloatingElements = dynamic(() => import('@/components/FloatingElements'), { ssr: false });
 
 async function getPortfolioData() {
   try {
@@ -43,48 +46,54 @@ export default async function Home() {
   }
 
   return (
-    <>
-      <Head>
-        <title>{portfolioData.personal.name} | {portfolioData.personal.title}</title>
-        <meta name="description" content={portfolioData.aboutMe.summary} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="keywords" content={`${portfolioData.personal.name}, ${portfolioData.personal.title}, Next.js, React, Web Development, Software Engineer`} />
-        <meta name="author" content={portfolioData.personal.name} />
-        <link rel="icon" href="/favicon.ico" />
+    <GamificationProvider>
+      <>
+        <Head>
+          <title>{portfolioData.personal.name} | {portfolioData.personal.title}</title>
+          <meta name="description" content={portfolioData.aboutMe.summary} />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <meta name="keywords" content={`${portfolioData.personal.name}, ${portfolioData.personal.title}, Next.js, React, Web Development, Software Engineer`} />
+          <meta name="author" content={portfolioData.personal.name} />
+          <link rel="icon" href="/favicon.ico" />
+          
+          {/* Open Graph */}
+          <meta property="og:title" content={`${portfolioData.personal.name} | ${portfolioData.personal.title}`} />
+          <meta property="og:description" content={portfolioData.aboutMe.summary} />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content={portfolioData.personal.website} />
+          <meta property="og:image" content={portfolioData.aboutMe.image.imgSrc} />
+          
+          {/* Twitter */}
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:title" content={`${portfolioData.personal.name} | ${portfolioData.personal.title}`} />
+          <meta name="twitter:description" content={portfolioData.aboutMe.summary} />
+          <meta name="twitter:image" content={portfolioData.aboutMe.image.imgSrc} />
+        </Head>
         
-        {/* Open Graph */}
-        <meta property="og:title" content={`${portfolioData.personal.name} | ${portfolioData.personal.title}`} />
-        <meta property="og:description" content={portfolioData.aboutMe.summary} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={portfolioData.personal.website} />
-        <meta property="og:image" content={portfolioData.aboutMe.image.imgSrc} />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${portfolioData.personal.name} | ${portfolioData.personal.title}`} />
-        <meta name="twitter:description" content={portfolioData.aboutMe.summary} />
-        <meta name="twitter:image" content={portfolioData.aboutMe.image.imgSrc} />
-      </Head>
-      
-      <main className="relative min-h-screen">
-        {/* 3D Background */}
-        <ThreeDBackground />
-        
-        {/* Content */}
-        <div className="relative z-10">
-          <Navbar personal={portfolioData?.personal} />
-          <Hero portfolioData={portfolioData} />
-          <About aboutMe={portfolioData?.aboutMe} />
-          <Projects projects={portfolioData?.projects} />
-          <Skills skills={portfolioData?.skills} />
-          <Timeline
-            experiences={portfolioData?.experiences}
-            education={portfolioData?.education}
-          />
-          <Contact contacts={portfolioData?.contacts} />
-          <Footer personal={portfolioData?.personal} />
-        </div>
-      </main>
-    </>
+        <main className="relative min-h-screen">
+          {/* 3D Background */}
+          <ThreeDBackground />
+          
+          {/* Gamification Elements */}
+          <ProgressTracker />
+          <FloatingElements />
+          
+          {/* Content */}
+          <div className="relative z-10">
+            <Navbar personal={portfolioData?.personal} />
+            <Hero portfolioData={portfolioData} />
+            <About aboutMe={portfolioData?.aboutMe} />
+            <Projects projects={portfolioData?.projects} />
+            <Skills skills={portfolioData?.skills} />
+            <Timeline
+              experiences={portfolioData?.experiences}
+              education={portfolioData?.education}
+            />
+            <Contact contacts={portfolioData?.contacts} />
+            <Footer personal={portfolioData?.personal} />
+          </div>
+        </main>
+      </>
+    </GamificationProvider>
   );
 }

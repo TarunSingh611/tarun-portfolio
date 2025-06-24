@@ -1,6 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { useGamification } from './GamificationContext';
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -8,6 +9,7 @@ export default function ContactForm() {
     email: '',
     message: '',
   });
+  const { unlockAchievement, setStats } = useGamification();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +26,9 @@ export default function ContactForm() {
       if (response.ok) {
         toast.success('Email sent successfully!');
         setFormData({ name: '', email: '', message: '' });
+        // Unlock achievement for contacting
+        unlockAchievement('contacted');
+        setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
       } else {
         toast.error('Failed to send email.');
       }
@@ -38,6 +43,8 @@ export default function ContactForm() {
       ...formData,
       [e.target.name]: e.target.value,
     });
+    // Track form interactions
+    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
   };
 
   return (

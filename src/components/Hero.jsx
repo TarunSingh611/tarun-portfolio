@@ -4,6 +4,42 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { Download, Mail, Linkedin, Github, Twitter, Instagram } from "lucide-react";
 import { downloadCV } from "../lib/cvGenerator";
+import { useGamification } from "./GamificationContext";
+
+// Client-side only floating particles component
+const FloatingParticles = () => {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  return (
+    <div className="absolute inset-0 overflow-hidden">
+      {[...Array(50)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-white/20 rounded-full"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -100, 0],
+            opacity: [0, 1, 0],
+          }}
+          transition={{
+            duration: Math.random() * 3 + 2,
+            repeat: Infinity,
+            delay: Math.random() * 2,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 const Hero = ({ portfolioData }) => {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -12,6 +48,7 @@ const Hero = ({ portfolioData }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
+  const { unlockAchievement } = useGamification();
 
   const texts = useMemo(() => [
     "Full Stack",
@@ -19,6 +56,11 @@ const Hero = ({ portfolioData }) => {
     "Next.js",
     "MERN Stack",
   ], []);
+
+  useEffect(() => {
+    // Unlock first visit achievement
+    unlockAchievement('firstVisit');
+  }, [unlockAchievement]);
 
   useEffect(() => {
     const currentText = texts[currentTextIndex];
@@ -51,6 +93,8 @@ const Hero = ({ portfolioData }) => {
     setIsDownloading(true);
     try {
       await downloadCV(portfolioData);
+      // Unlock CV download achievement
+      unlockAchievement('downloadedCV');
     } catch (error) {
       console.error('Error downloading CV:', error);
     } finally {
@@ -82,28 +126,8 @@ const Hero = ({ portfolioData }) => {
       ref={ref}
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
     >
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(50)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-white/20 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
+      {/* Floating Particles - Client-side only */}
+      <FloatingParticles />
 
       {/* Gradient Orbs */}
       <motion.div

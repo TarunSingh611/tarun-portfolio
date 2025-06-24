@@ -1,13 +1,26 @@
 'use client';
 // File: src/components/Skills.js
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Code, Database, Palette, Wrench, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useGamification } from './GamificationContext';
 
 export default function Skills({ skills }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { markSectionVisited, unlockAchievement, setStats } = useGamification();
+
+  useEffect(() => {
+    if (isInView) {
+      markSectionVisited('skills');
+      unlockAchievement('viewedSkills');
+    }
+  }, [isInView, markSectionVisited, unlockAchievement]);
+
+  const handleSkillClick = () => {
+    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
+  };
 
   const skillIcons = {
     languages: Code,
@@ -118,10 +131,12 @@ export default function Skills({ skills }) {
                       animate={isInView ? { opacity: 1, scale: 1 } : {}}
                       transition={{ duration: 0.4, delay: 0.4 + categoryIndex * 0.1 + index * 0.05 }}
                       whileHover={{ scale: 1.05 }}
-                      className="relative group/skill"
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleSkillClick}
+                      className="relative group/skill cursor-pointer"
                     >
                       <div className={cn(
-                        "px-3 py-2 rounded-lg text-sm font-medium text-center transition-all duration-300 cursor-pointer",
+                        "px-3 py-2 rounded-lg text-sm font-medium text-center transition-all duration-300",
                         "bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600",
                         "border border-gray-300 dark:border-gray-600",
                         "hover:shadow-md hover:border-blue-400 dark:hover:border-blue-500",

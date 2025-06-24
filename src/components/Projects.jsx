@@ -1,34 +1,46 @@
 'use client';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Github, ArrowLeft, ArrowRight, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import { useGamification } from './GamificationContext';
 
 export default function Projects({ projects }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { markSectionVisited, unlockAchievement, setStats } = useGamification();
 
-  const handleNext = () => {
+  useEffect(() => {
+    if (isInView) {
+      markSectionVisited('projects');
+      unlockAchievement('viewedProjects');
+    }
+  }, [isInView, markSectionVisited, unlockAchievement]);
+
+  const handleNext = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
-  };
+    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
+  }, [projects.length, setStats]);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? projects.length - 1 : prevIndex - 1
     );
-  };
+    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
+  }, [projects.length, setStats]);
 
-  const goToProject = (index) => {
+  const goToProject = useCallback((index) => {
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
-  };
+    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
+  }, [currentIndex, setStats]);
 
-  const cardVariants = {
+  const cardVariants = useMemo(() => ({
     initial: (direction) => ({
       x: direction > 0 ? 200 : -200,
       opacity: 0,
@@ -56,9 +68,9 @@ export default function Projects({ projects }) {
         duration: 0.4,
       },
     }),
-  };
+  }), []);
 
-  const ProjectCard = ({ project, isActive }) => {
+  const ProjectCard = useCallback(({ project, isActive }) => {
     return (
       <motion.div
         className={cn(
@@ -167,7 +179,7 @@ export default function Projects({ projects }) {
         </div>
       </motion.div>
     );
-  };
+  }, [goToProject, projects]);
 
   return (
     <section id="projects" className="relative py-16 overflow-hidden">

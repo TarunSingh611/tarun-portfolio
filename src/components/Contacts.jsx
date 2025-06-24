@@ -1,12 +1,25 @@
 'use client';
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Mail, Phone, MapPin, MessageSquare } from 'lucide-react';
 import ContactForm from './ContactForm';
+import { useGamification } from './GamificationContext';
 
 export default function Contact({ contacts }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const { markSectionVisited, unlockAchievement, setStats } = useGamification();
+
+  useEffect(() => {
+    if (isInView) {
+      markSectionVisited('contact');
+    }
+  }, [isInView, markSectionVisited]);
+
+  const handleContactInteraction = () => {
+    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
+    unlockAchievement('contacted');
+  };
 
   const contactInfo = [
     {
@@ -116,6 +129,7 @@ export default function Contact({ contacts }) {
                     transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
                     whileHover={{ scale: 1.02, y: -2 }}
                     className="card-glass p-6 hover-lift group block"
+                    onClick={handleContactInteraction}
                   >
                     <div className="flex items-center gap-4">
                       <div className={`p-3 rounded-xl bg-gradient-to-br ${info.color} group-hover:scale-110 transition-transform duration-300`}>

@@ -1,12 +1,20 @@
 'use client';  
 // File: src/components/About.js  
 import { motion, useInView } from 'framer-motion';  
-import { useRef } from 'react';  
+import { useRef, useEffect } from 'react';  
 import Image from 'next/image';
+import { useGamification } from './GamificationContext';
 
 export default function About({ aboutMe }) {  
     const ref = useRef(null);  
     const isInView = useInView(ref, { once: true, margin: "-100px" });  
+    const { markSectionVisited } = useGamification();
+
+    useEffect(() => {
+        if (isInView) {
+            markSectionVisited('about');
+        }
+    }, [isInView, markSectionVisited]);
 
     return (  
         <section id="about" className="relative py-20 overflow-hidden">  
