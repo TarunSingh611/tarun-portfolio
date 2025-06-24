@@ -2,7 +2,6 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { Briefcase, GraduationCap, MapPin, Calendar, ArrowRight } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 export default function Timeline({ experiences, education }) {
   const ref = useRef(null);

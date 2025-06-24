@@ -1,8 +1,8 @@
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { Download, Mail, Linkedin, Github, Twitter, Instagram, ExternalLink } from "lucide-react";
+import { Download, Mail, Linkedin, Github, Twitter, Instagram } from "lucide-react";
 import { downloadCV } from "../lib/cvGenerator";
 
 const Hero = ({ portfolioData }) => {
@@ -10,28 +10,15 @@ const Hero = ({ portfolioData }) => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
-  const texts = [
+  const texts = useMemo(() => [
     "Full Stack",
     "React",
     "Next.js",
     "MERN Stack",
-  ];
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      setMousePosition({
-        x: e.clientX / window.innerWidth,
-        y: e.clientY / window.innerHeight,
-      });
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  ], []);
 
   useEffect(() => {
     const currentText = texts[currentTextIndex];
@@ -170,7 +157,7 @@ const Hero = ({ portfolioData }) => {
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.4 }}
             >
-              <span className="text-white">I'm a </span>
+              <span className="text-white">I&apos;m a </span>
               <span className="text-purple-400 min-h-[2rem] inline-block">
                 {displayText}
                 <span className="animate-pulse">|&nbsp;</span>

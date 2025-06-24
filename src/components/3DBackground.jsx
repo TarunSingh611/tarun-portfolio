@@ -9,7 +9,8 @@ export default function ThreeDBackground() {
   const animationIdRef = useRef(null);
 
   useEffect(() => {
-    if (!mountRef.current) return;
+    const mountElement = mountRef.current;
+    if (!mountElement) return;
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -35,7 +36,7 @@ export default function ThreeDBackground() {
     renderer.setClearColor(0x000000, 0);
     rendererRef.current = renderer;
 
-    mountRef.current.appendChild(renderer.domElement);
+    mountElement.appendChild(renderer.domElement);
 
     // Create particles
     const particlesGeometry = new THREE.BufferGeometry();
@@ -180,8 +181,8 @@ export default function ThreeDBackground() {
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current);
       }
-      if (mountRef.current && renderer.domElement) {
-        mountRef.current.removeChild(renderer.domElement);
+      if (mountElement && renderer.domElement) {
+        mountElement.removeChild(renderer.domElement);
       }
       renderer.dispose();
     };

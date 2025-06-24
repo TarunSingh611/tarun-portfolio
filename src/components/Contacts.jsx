@@ -88,7 +88,7 @@ export default function Contact({ contacts }) {
             transition={{ duration: 0.6, delay: 0.3 }}
             className="text-lg text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mt-6"
           >
-            Ready to collaborate on your next project? Let's discuss how we can bring your ideas to life.
+            Ready to collaborate on your next project? Let&apos;s discuss how we can bring your ideas to life.
           </motion.p>
         </motion.div>
 
@@ -102,7 +102,7 @@ export default function Contact({ contacts }) {
           >
             <div>
               <h3 className="text-2xl sm:text-3xl font-bold mb-8 text-gradient-primary">
-                Let's Connect
+                Let&apos;s Connect
               </h3>
               
               {/* Contact Cards */}

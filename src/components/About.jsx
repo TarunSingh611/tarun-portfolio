@@ -2,19 +2,11 @@
 // File: src/components/About.js  
 import { motion, useInView } from 'framer-motion';  
 import { useRef } from 'react';  
-import { User, Code, Rocket, Award } from 'lucide-react';  
-import { cn } from '@/lib/utils';  
+import Image from 'next/image';
 
 export default function About({ aboutMe }) {  
     const ref = useRef(null);  
     const isInView = useInView(ref, { once: true, margin: "-100px" });  
-
-    const stats = [  
-        { icon: Code, label: "Projects Completed", value: "50+" },  
-        { icon: Rocket, label: "Years Experience", value: "3+" },  
-        { icon: Award, label: "Technologies", value: "15+" },  
-        { icon: User, label: "Happy Clients", value: "25+" },  
-    ];  
 
     return (  
         <section id="about" className="relative py-20 overflow-hidden">  
@@ -112,9 +104,11 @@ export default function About({ aboutMe }) {
                                 className="relative z-10"  
                             >  
                                 <div className="relative overflow-hidden">  
-                                    <img  
+                                    <Image  
                                         src={aboutMe?.image?.imgSrc}  
                                         alt={aboutMe?.image?.imgAlt}  
+                                        width={400}
+                                        height={400}
                                         className="w-full h-auto object-cover max-w-md mix-blend-multiply rounded-xl"  
                                     />  
                                 </div>  

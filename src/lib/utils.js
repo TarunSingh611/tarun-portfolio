@@ -26,11 +26,9 @@ export function debounce(func, wait) {
 
 export function throttle(func, limit) {
   let inThrottle;
-  return function() {
-    const args = arguments;
-    const context = this;
+  return (...args) => {
     if (!inThrottle) {
-      func.apply(context, args);
+      func.apply(null, args);
       inThrottle = true;
       setTimeout(() => inThrottle = false, limit);
     }

@@ -1,13 +1,13 @@
 'use client';
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { ExternalLink, Github, ArrowLeft, ArrowRight, Code, Globe } from 'lucide-react';
+import { Github, ArrowLeft, ArrowRight, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export default function Projects({ projects }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
-  const [hoveredIndex, setHoveredIndex] = useState(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
@@ -77,9 +77,11 @@ export default function Projects({ projects }) {
           
           {/* Image */}
           <div className="relative h-2/3 overflow-hidden">
-            <img
+            <Image
               src={project?.image}
               alt={project?.title}
+              width={600}
+              height={400}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
@@ -282,9 +284,11 @@ export default function Projects({ projects }) {
                   : "border-gray-300 dark:border-gray-600 hover:border-blue-400"
               )}
             >
-              <img
+              <Image
                 src={project.image}
                 alt={project.title}
+                width={80}
+                height={80}
                 className="w-full h-full object-cover"
               />
               <div className={cn(
