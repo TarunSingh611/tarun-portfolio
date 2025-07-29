@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useGamification } from './GamificationContext';
 
 export default function Projects({ projects }) {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(Math.floor(projects.length / 2));
   const [direction, setDirection] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
@@ -135,7 +135,7 @@ export default function Projects({ projects }) {
 
                   {/* Action Buttons */}
                   <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                    <motion.a
+                   {project?.link && <motion.a
                       href={project?.link}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -146,7 +146,8 @@ export default function Projects({ projects }) {
                       <Globe className="w-4 h-4" />
                       <span>Live Demo</span>
                     </motion.a>
-                    <motion.a
+                    }
+                    {project?.github && <motion.a
                       href={`https://github.com/tarunsingh611/${project?.title?.toLowerCase().replace(/\s+/g, '-')}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -156,7 +157,7 @@ export default function Projects({ projects }) {
                     >
                       <Github className="w-4 h-4" />
                       <span>Code</span>
-                    </motion.a>
+                    </motion.a>}
                   </div>
                 </>
               )}
