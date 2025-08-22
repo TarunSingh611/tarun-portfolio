@@ -11,8 +11,6 @@ const urlsToCache = [
   '/images/projects/PizzaFleetApp.png',
   '/images/projects/RecipeMaker.png',
   '/images/projects/SocialMediaApp.png',
-  '/fonts/GeistVF.woff',
-  '/fonts/GeistMonoVF.woff',
   '/assests/portfolio.json'
 ];
 
@@ -22,7 +20,15 @@ self.addEventListener('install', (event) => {
     caches.open(CACHE_NAME)
       .then((cache) => {
         console.log('Opened cache');
-        return cache.addAll(urlsToCache);
+        // Only cache files that exist, handle errors gracefully
+        return Promise.allSettled(
+          urlsToCache.map(url => 
+            cache.add(url).catch(error => {
+              console.warn(`Failed to cache ${url}:`, error);
+              return null;
+            })
+          )
+        );
       })
   );
 });

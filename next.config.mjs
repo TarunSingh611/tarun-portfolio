@@ -10,6 +10,14 @@ const nextConfig = {
   experimental: {
     optimizeCss: true,
     optimizePackageImports: ['framer-motion', 'lucide-react', 'three'],
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
   },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
@@ -17,6 +25,25 @@ const nextConfig = {
   compress: true,
   poweredByHeader: false,
   generateEtags: false,
+  swcMinify: true,
+  // Ensure modern Node.js compatibility
+  webpack: (config, { dev, isServer }) => {
+    // Optimize for modern environments
+    if (!dev && !isServer) {
+      config.optimization.splitChunks = {
+        chunks: 'all',
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: 'vendors',
+            chunks: 'all',
+          },
+        },
+      };
+    }
+    
+    return config;
+  },
 }
 
 export default nextConfig;
