@@ -118,6 +118,7 @@ export default function About({ aboutMe }) {
                                         width={400}
                                         height={400}
                                         className="w-full h-auto object-cover max-w-md mix-blend-multiply rounded-xl"  
+                                        priority
                                     />  
                                 </div>  
                             </motion.div>  

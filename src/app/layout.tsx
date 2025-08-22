@@ -9,21 +9,69 @@ export const metadata = {
     "I'm Tarun Singh, a results-driven software developer with expertise in frontend and backend technologies.",
   keywords:
     'Tarun Singh, Software Developer, Frontend Developer, Backend Developer, Portfolio, Full-Stack, React, Next.js',
+  authors: [{ name: 'Tarun Singh' }],
+  creator: 'Tarun Singh',
+  publisher: 'Tarun Singh',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  metadataBase: new URL('https://tarunsinghrajput.netlify.app'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     type: 'website',
     url: 'https://tarunsinghrajput.netlify.app',
     title: 'Tarun Singh - Software Developer',
     description:
       'Professional portfolio of Tarun Singh, showcasing projects, skills, and experiences.',
+    siteName: 'Tarun Singh Portfolio',
     images: [
       {
-        url: 'https://tarunsinghrajput.netlify.app/images/profile/Avatar.png',
+        url: '/images/profile/Avatar.png',
         width: 800,
         height: 600,
         alt: 'Tarun Singh Profile Image',
       },
     ],
+    locale: 'en_US',
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Tarun Singh - Software Developer',
+    description: 'Professional portfolio of Tarun Singh, showcasing projects, skills, and experiences.',
+    images: ['/images/profile/Avatar.png'],
+    creator: '@tarun__sr',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'SpNrpA4epU_QtBEKJfm_beI121IrI1ORz8muVem-4nY',
+  },
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'Tarun Portfolio',
+  },
+};
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: '#3b82f6',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -32,22 +80,43 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta charSet="UTF-8" />
-        <meta name="author" content="Tarun Singh" />
-        <meta name="google-site-verification" content="SpNrpA4epU_QtBEKJfm_beI121IrI1ORz8muVem-4nY" />
+        <meta name="theme-color" content="#3b82f6" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Tarun Portfolio" />
         
-        <title>{metadata.title}</title>
-        <meta name="description" content={metadata.description} />
-        <meta name="keywords" content={metadata.keywords} />
+        {/* Preload critical resources */}
+        <link rel="preload" href="/images/profile/Avatar.png" as="image" type="image/png" />
+        <link rel="preload" href="/fonts/GeistVF.woff" as="font" type="font/woff" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/GeistMonoVF.woff" as="font" type="font/woff" crossOrigin="anonymous" />
         
-        <meta property="og:title" content={metadata.openGraph.title} />
-        <meta property="og:description" content={metadata.openGraph.description} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={metadata.openGraph.url} />
-        <meta property="og:image" content={metadata.openGraph.images[0].url} />
-        <meta property="og:image:width" content="800" />
-        <meta property="og:image:height" content="600" />
-        <meta property="og:image:alt" content={metadata.openGraph.images[0].alt} />
-
+        {/* DNS prefetch for external domains */}
+        <link rel="dns-prefetch" href="https://tarunsingh611.github.io" />
+        <link rel="dns-prefetch" href="https://api.placeholder.com" />
+        
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/images/profile/Avatar.png" />
+        
+        {/* Service Worker Registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function() {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                      console.log('SW registered: ', registration);
+                    })
+                    .catch(function(registrationError) {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                });
+              }
+            `,
+          }}
+        />
+        
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
@@ -67,7 +136,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               ],
               worksFor: {
                 "@type": "Organization",
-                name: "Axtrum Solutions Pvt. Ltd.",
+                name: "DataNexify",
               },
             }),
           }}
@@ -75,7 +144,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body className="bg-gray-50 dark:bg-gray-900">
         {children}
-        <ToastContainer />
+        <ToastContainer 
+          position="bottom-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </body>
     </html>
   );

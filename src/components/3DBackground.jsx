@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 
 export default function ThreeDBackground() {
@@ -7,10 +7,16 @@ export default function ThreeDBackground() {
   const sceneRef = useRef(null);
   const rendererRef = useRef(null);
   const animationIdRef = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const mountElement = mountRef.current;
     if (!mountElement) return;
+
+    // Performance optimization: Check if device can handle 3D
+    const isLowPerformance = navigator.hardwareConcurrency <= 4 || 
+                           navigator.deviceMemory <= 4 ||
+                           window.innerWidth < 768;
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -25,22 +31,24 @@ export default function ThreeDBackground() {
     );
     camera.position.z = 5;
 
-    // Renderer setup
+    // Renderer setup with performance optimizations
     const renderer = new THREE.WebGLRenderer({ 
       alpha: true, 
-      antialias: true,
-      powerPreference: "high-performance"
+      antialias: !isLowPerformance,
+      powerPreference: "high-performance",
+      stencil: false,
+      depth: false
     });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, isLowPerformance ? 1 : 2));
     renderer.setClearColor(0x000000, 0);
     rendererRef.current = renderer;
 
     mountElement.appendChild(renderer.domElement);
 
-    // Create particles
+    // Create particles with reduced count for better performance
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 1000;
+    const particlesCount = isLowPerformance ? 300 : 600;
     const posArray = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount * 3; i++) {
@@ -74,8 +82,8 @@ export default function ThreeDBackground() {
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
     scene.add(particlesMesh);
 
-    // Create floating spheres
-    const sphereGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+    // Create floating spheres with reduced count
+    const sphereGeometry = new THREE.SphereGeometry(0.1, isLowPerformance ? 8 : 16, isLowPerformance ? 8 : 16);
     const sphereMaterial = new THREE.MeshBasicMaterial({
       color: 0x667eea,
       transparent: true,
@@ -83,7 +91,8 @@ export default function ThreeDBackground() {
     });
 
     const spheres = [];
-    for (let i = 0; i < 20; i++) {
+    const sphereCount = isLowPerformance ? 10 : 20;
+    for (let i = 0; i < sphereCount; i++) {
       const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
       sphere.position.set(
         (Math.random() - 0.5) * 15,
@@ -98,8 +107,8 @@ export default function ThreeDBackground() {
       scene.add(sphere);
     }
 
-    // Create wave effect
-    const waveGeometry = new THREE.PlaneGeometry(20, 20, 50, 50);
+    // Create wave effect with reduced complexity
+    const waveGeometry = new THREE.PlaneGeometry(20, 20, isLowPerformance ? 25 : 50, isLowPerformance ? 25 : 50);
     const waveMaterial = new THREE.ShaderMaterial({
       vertexShader: `
         uniform float time;
@@ -131,9 +140,34 @@ export default function ThreeDBackground() {
     waveMesh.position.z = -5;
     scene.add(waveMesh);
 
-    // Animation
+    // Intersection Observer for visibility
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+    observer.observe(mountElement);
+
+    // Animation with performance controls
     let time = 0;
-    const animate = () => {
+    const targetFPS = isLowPerformance ? 30 : 60;
+    const frameInterval = 1000 / targetFPS;
+    let lastFrameTime = 0;
+
+    const animate = (currentTime) => {
+      if (!isVisible) {
+        animationIdRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      
+      // Limit FPS for better performance
+      if (currentTime - lastFrameTime < frameInterval) {
+        animationIdRef.current = requestAnimationFrame(animate);
+        return;
+      }
+      lastFrameTime = currentTime;
+
       time += 0.01;
       
       // Rotate particles
@@ -166,27 +200,43 @@ export default function ThreeDBackground() {
 
     animate();
 
-    // Handle resize
+    // Handle resize with debouncing
+    let resizeTimeout;
     const handleResize = () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      }, 100);
     };
 
     window.addEventListener('resize', handleResize);
 
     // Cleanup
     return () => {
+      observer.disconnect();
       window.removeEventListener('resize', handleResize);
+      clearTimeout(resizeTimeout);
+      
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current);
       }
+      
       if (mountElement && renderer.domElement) {
         mountElement.removeChild(renderer.domElement);
       }
+      
+      // Dispose of resources
       renderer.dispose();
+      particlesGeometry.dispose();
+      particlesMaterial.dispose();
+      sphereGeometry.dispose();
+      sphereMaterial.dispose();
+      waveGeometry.dispose();
+      waveMaterial.dispose();
     };
-  }, []);
+  }, [isVisible]);
 
   return (
     <div 

@@ -95,6 +95,11 @@ export default function Projects({ projects }) {
               width={600}
               height={400}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              priority={isActive}
+              loading={isActive ? "eager" : "lazy"}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
           </div>
@@ -148,7 +153,7 @@ export default function Projects({ projects }) {
                     </motion.a>
                     }
                     {project?.github && <motion.a
-                      href={`https://github.com/tarunsingh611/${project?.title?.toLowerCase().replace(/\s+/g, '-')}`}
+                      href={project?.github}
                       target="_blank"
                       rel="noopener noreferrer"
                       whileHover={{ scale: 1.02 }}
@@ -303,6 +308,8 @@ export default function Projects({ projects }) {
                 width={80}
                 height={80}
                 className="w-full h-full object-cover"
+                loading="lazy"
+                sizes="80px"
               />
               <div className={cn(
                 "absolute inset-0 transition-opacity duration-200",

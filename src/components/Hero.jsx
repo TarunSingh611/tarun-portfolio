@@ -160,10 +160,8 @@ const Hero = ({ portfolioData }) => {
           initial={{ opacity: 0, y: 50 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
-          className="space-y-8"
+          className="space-y-8 mt-20"
         >
-          {/* Profile Image */}
-
           {/* Name and Title */}
           <div className="space-y-4">
             <motion.h1
