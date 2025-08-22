@@ -1,36 +1,452 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Tarun Singh - Full Stack Developer Portfolio
 
-## Getting Started
+<div align="center">
 
-First, run the development server:
+![GitHub stars](https://img.shields.io/github/stars/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=yellow)
+![GitHub forks](https://img.shields.io/github/forks/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=blue)
+![GitHub issues](https://img.shields.io/github/issues/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=red)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=green)
+![GitHub license](https://img.shields.io/github/license/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=orange)
+
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-View%20Portfolio-00D4AA?style=for-the-badge&logo=vercel&logoColor=white)](https://tarunsinghrajput.netlify.app)
+[![Documentation](https://img.shields.io/badge/Documentation-README-007ACC?style=for-the-badge&logo=read-the-docs&logoColor=white)](#)
+[![Contributing](https://img.shields.io/badge/Contributing-Welcome-6A4C93?style=for-the-badge&logo=github&logoColor=white)](#contributing)
+
+</div>
+
+<div align="center">
+
+![Next.js](https://img.shields.io/badge/Next.js-14.2.15-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.1-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-10.18.0-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![Three.js](https://img.shields.io/badge/Three.js-0.161.0-000000?style=for-the-badge&logo=three.js&logoColor=white)
+
+</div>
+
+<div align="center">
+
+![GitHub Stats](https://github-readme-stats.vercel.app/api?username=TarunSingh611&show_icons=true&theme=radical&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9&icon_color=58A6FF&hide=contribs,issues)
+![Top Languages](https://github-readme-stats.vercel.app/api/top-langs/?username=TarunSingh611&layout=compact&theme=radical&hide_border=true&bg_color=0D1117&title_color=58A6FF&text_color=C9D1D9)
+![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=TarunSingh611&theme=radical&hide_border=true&background=0D1117&stroke=58A6FF&ring=58A6FF&fire=58A6FF&currStreakNum=C9D1D9&sideNums=C9D1D9&currStreakLabel=C9D1D9&sideLabels=C9D1D9&dates=C9D1D9)
+
+</div>
+
+<div align="center">
+
+![Profile Views](https://komarev.com/ghpvc/?username=TarunSingh611&style=for-the-badge&color=58A6FF)
+![Repository Views](https://img.shields.io/badge/Repository%20Views-1k+-00D4AA?style=for-the-badge&logo=github&logoColor=white)
+
+</div>
+
+---
+
+## 📋 **Project Overview**
+
+A modern, interactive portfolio website showcasing my skills, projects, and experience as a Full Stack Developer. Built with cutting-edge technologies and featuring gamification elements, 3D backgrounds, and responsive design.
+
+### 🌟 **Key Features**
+
+- **🎮 Gamification System** - Interactive achievements and progress tracking
+- **🎨 3D Background** - Dynamic Three.js particle system and floating elements
+- **📱 Responsive Design** - Optimized for all devices and screen sizes
+- **⚡ Performance Optimized** - Next.js 14 with App Router and SSR
+- **🎯 Interactive Elements** - Smooth animations with Framer Motion
+- **📄 Dynamic CV Generation** - Real-time PDF generation with portfolio data
+- **🔗 Contact Integration** - Functional contact form with email notifications
+- **🌙 Dark/Light Theme** - Adaptive theme system
+- **📊 Progress Tracking** - User engagement analytics and statistics
+
+---
+
+## 🛠️ **Technology Stack**
+
+| Category | Technologies |
+|----------|-------------|
+| **Frontend Framework** | Next.js 14, React 18, TypeScript |
+| **Styling** | Tailwind CSS, CSS Modules |
+| **Animations** | Framer Motion, Three.js |
+| **3D Graphics** | Three.js, WebGL |
+| **State Management** | React Context, Custom Hooks |
+| **Form Handling** | React Hook Form, Validation |
+| **PDF Generation** | jsPDF, html2canvas |
+| **Email Service** | Nodemailer, API Routes |
+| **Deployment** | Vercel, Netlify |
+| **Development** | ESLint, Prettier, Git |
+
+---
+
+## 🚀 **Quick Start**
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+- Git
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/TarunSingh611/tarun-portfolio.git
+
+# Navigate to project directory
+cd tarun-portfolio
+
+# Install dependencies
+npm install
+# or
+yarn install
+
+# Set up environment variables
+cp .env.example .env.local
+```
+
+### Environment Variables
+
+Create a `.env.local` file in the root directory:
+
+```env
+# Email Configuration
+EMAIL_USER=your-email@gmail.com
+EMAIL_PASS=your-app-password
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+
+# Portfolio Data URL (optional)
+PORTFOLIO_DATA_URL=https://tarunsingh611.github.io/CDN-oneServer/portfolio.json
+```
+
+### Development
+
+```bash
+# Start development server
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Open http://localhost:3000 in your browser
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Build & Deploy
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# Build for production
+npm run build
+# or
+yarn build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# Start production server
+npm start
+# or
+yarn start
 
-## Learn More
+# Deploy to Vercel
+vercel --prod
+```
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 📁 **Project Structure**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+tarun-portfolio/
+├── 📁 public/
+│   ├── 📁 images/
+│   │   ├── 📁 profile/          # Profile images
+│   │   └── 📁 projects/         # Project screenshots
+│   └── 📁 assests/
+│       └── portfolio.json       # Portfolio data
+├── 📁 src/
+│   ├── 📁 app/                  # Next.js App Router
+│   │   ├── 📁 api/              # API routes
+│   │   ├── 📁 fonts/            # Custom fonts
+│   │   ├── globals.css          # Global styles
+│   │   ├── layout.tsx           # Root layout
+│   │   └── page.jsx             # Home page
+│   ├── 📁 components/           # React components
+│   │   ├── 3DBackground.jsx     # Three.js background
+│   │   ├── About.jsx            # About section
+│   │   ├── ContactForm.jsx      # Contact form
+│   │   ├── FloatingElements.jsx # Floating UI elements
+│   │   ├── GamificationContext.jsx # Gamification system
+│   │   ├── Hero.jsx             # Hero section
+│   │   ├── Navbar.jsx           # Navigation
+│   │   ├── Projects.jsx         # Projects showcase
+│   │   ├── ProgressTracker.jsx  # Progress tracking
+│   │   ├── Skills.jsx           # Skills section
+│   │   └── Timeline.jsx         # Experience timeline
+│   ├── 📁 framework/            # Backend utilities
+│   │   └── nodeMail.js          # Email service
+│   └── 📁 lib/                  # Utility functions
+│       ├── cvGenerator.js       # PDF generation
+│       └── utils.js             # Helper functions
+├── package.json                 # Dependencies
+├── tailwind.config.ts          # Tailwind configuration
+├── next.config.mjs             # Next.js configuration
+└── README.md                   # Project documentation
+```
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🎮 **Gamification Features**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The portfolio includes an interactive gamification system to enhance user engagement:
+
+### 🏆 **Achievements**
+- **First Visit** - Welcome achievement for new visitors
+- **Project Hunter** - Awarded for exploring projects section
+- **Skill Master** - Unlocked when viewing skills
+- **CV Collector** - Earned by downloading resume
+- **Networker** - Given for contacting via form
+- **Completionist** - Awarded for exploring all sections
+
+### 📊 **Progress Tracking**
+- Section visit tracking
+- Time spent on portfolio
+- User interactions count
+- Scroll depth analytics
+- Achievement unlock notifications
+
+### 🎯 **Interactive Elements**
+- Floating particles and elements
+- Smooth scroll animations
+- Hover effects and transitions
+- Progress indicators
+- Achievement notifications
+
+---
+
+## 🎨 **Design Features**
+
+### **3D Background System**
+- Dynamic particle system using Three.js
+- Floating geometric shapes
+- Interactive mouse tracking
+- Performance-optimized rendering
+- Responsive canvas sizing
+
+### **Animation System**
+- Framer Motion integration
+- Smooth page transitions
+- Staggered element animations
+- Parallax scrolling effects
+- Micro-interactions
+
+### **Responsive Design**
+- Mobile-first approach
+- Adaptive layouts
+- Touch-friendly interactions
+- Optimized for all screen sizes
+- Progressive enhancement
+
+---
+
+## 📧 **Contact Integration**
+
+The portfolio includes a fully functional contact system:
+
+### **Features**
+- Real-time form validation
+- Email notifications
+- Spam protection
+- Success/error feedback
+- Mobile-optimized interface
+
+### **Email Service**
+- Nodemailer integration
+- Gmail SMTP support
+- HTML email templates
+- File attachment support
+- Rate limiting
+
+---
+
+## 🚀 **Deployment**
+
+### **Vercel (Recommended)**
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel --prod
+```
+
+### **Netlify**
+```bash
+# Build the project
+npm run build
+
+# Deploy to Netlify
+# Connect your GitHub repository to Netlify
+# Set build command: npm run build
+# Set publish directory: .next
+```
+
+### **Environment Setup**
+- Configure email service credentials
+- Set up portfolio data URL
+- Configure custom domain (optional)
+- Enable analytics (optional)
+
+---
+
+## 🔧 **Configuration**
+
+### **Portfolio Data**
+The portfolio data is loaded from a JSON file that can be customized:
+
+```json
+{
+  "personal": {
+    "name": "Your Name",
+    "title": "Your Title",
+    "email": "your-email@example.com",
+    "website": "https://your-website.com"
+  },
+  "aboutMe": {
+    "summary": "Your professional summary",
+    "professionalSummary": ["Point 1", "Point 2"]
+  },
+  "projects": [
+    {
+      "title": "Project Name",
+      "description": "Project description",
+      "techStack": ["Tech1", "Tech2"],
+      "image": "/images/projects/project.png",
+      "link": "https://project-url.com"
+    }
+  ]
+}
+```
+
+### **Customization**
+- Update `public/assests/portfolio.json` with your data
+- Modify component styles in `src/components/`
+- Customize animations in Framer Motion
+- Adjust 3D background parameters
+- Update gamification achievements
+
+---
+
+## 🤝 **Contributing**
+
+We welcome contributions! Please follow these steps:
+
+### **Fork & Clone**
+```bash
+# Fork the repository
+# Clone your fork
+git clone https://github.com/your-username/tarun-portfolio.git
+cd tarun-portfolio
+
+# Add upstream remote
+git remote add upstream https://github.com/TarunSingh611/tarun-portfolio.git
+```
+
+### **Development Workflow**
+```bash
+# Create feature branch
+git checkout -b feature/your-feature-name
+
+# Make changes and commit
+git add .
+git commit -m "feat: add your feature description"
+
+# Push to your fork
+git push origin feature/your-feature-name
+
+# Create Pull Request
+```
+
+### **Guidelines**
+- Follow the existing code style
+- Add tests for new features
+- Update documentation
+- Ensure responsive design
+- Test on multiple devices
+- Follow semantic commit messages
+
+---
+
+## 📄 **License**
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🗺️ **Roadmap**
+
+### **Phase 1 - Core Features** ✅
+- [x] Responsive portfolio design
+- [x] 3D background system
+- [x] Gamification elements
+- [x] Contact form integration
+- [x] CV generation
+
+### **Phase 2 - Enhancements** 🚧
+- [ ] Blog integration
+- [ ] Portfolio analytics
+- [ ] Multi-language support
+- [ ] Advanced animations
+- [ ] SEO optimization
+
+### **Phase 3 - Advanced Features** 📋
+- [ ] Real-time collaboration
+- [ ] Portfolio themes
+- [ ] Advanced 3D scenes
+- [ ] Performance monitoring
+- [ ] A/B testing
+
+---
+
+## 📞 **Support**
+
+### **Get Help**
+- 📧 **Email**: thakurtarun936@gmail.com
+- 💬 **LinkedIn**: [Tarun Singh](https://linkedin.com/in/tarun-singh-rajput)
+- 🐦 **Twitter**: [@tarun__sr](https://x.com/tarun__sr)
+- 📱 **Phone**: +91 7006072897
+
+### **Report Issues**
+- 🐛 [Bug Reports](https://github.com/TarunSingh611/tarun-portfolio/issues)
+- 💡 [Feature Requests](https://github.com/TarunSingh611/tarun-portfolio/issues)
+- 📖 [Documentation](https://github.com/TarunSingh611/tarun-portfolio/wiki)
+
+---
+
+## 🙏 **Acknowledgments**
+
+- **Next.js Team** - For the amazing framework
+- **Vercel** - For seamless deployment
+- **Framer Motion** - For smooth animations
+- **Three.js** - For 3D graphics
+- **Tailwind CSS** - For utility-first styling
+- **GitHub Community** - For inspiration and support
+
+---
+
+## 📊 **Project Statistics**
+
+<div align="center">
+
+![Repository Size](https://img.shields.io/github/repo-size/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=blue)
+![Code Size](https://img.shields.io/github/languages/code-size/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=green)
+![Last Commit](https://img.shields.io/github/last-commit/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=orange)
+![Commit Activity](https://img.shields.io/github/commit-activity/m/TarunSingh611/tarun-portfolio?style=for-the-badge&logo=github&color=purple)
+
+</div>
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [Tarun Singh](https://github.com/TarunSingh611)**
+
+[![Portfolio](https://img.shields.io/badge/Portfolio-View%20Live-00D4AA?style=for-the-badge&logo=vercel&logoColor=white)](https://tarunsinghrajput.netlify.app)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/TarunSingh611)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/tarun-singh-rajput)
+
+</div>
