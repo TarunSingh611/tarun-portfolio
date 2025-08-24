@@ -97,24 +97,32 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/images/profile/Avatar.png" />
         
-        {/* Service Worker Registration */}
+        {/* Cache Busting Script */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
+              // Clear any existing service worker registrations
               if ('serviceWorker' in navigator) {
-                window.addEventListener('load', function() {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                      console.log('SW registered: ', registration);
-                    })
-                    .catch(function(registrationError) {
-                      console.log('SW registration failed: ', registrationError);
-                    });
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                  for(let registration of registrations) {
+                    registration.unregister();
+                  }
+                });
+              }
+              
+              // Clear browser cache for portfolio data
+              if ('caches' in window) {
+                caches.keys().then(function(names) {
+                  for (let name of names) {
+                    caches.delete(name);
+                  }
                 });
               }
             `,
           }}
         />
+        
+
         
         {/* JSON-LD Structured Data */}
         <script
@@ -130,8 +138,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               url: "https://tarunsinghrajput.netlify.app",
               image: "https://tarunsinghrajput.netlify.app/images/profile/Avatar.png",
               sameAs: [
-                "https://www.linkedin.com/in/tarun-singh",
-                "https://github.com/tarunsingh611",
+                "github.com/tarunsingh611",
               ],
               worksFor: {
                 "@type": "Organization",

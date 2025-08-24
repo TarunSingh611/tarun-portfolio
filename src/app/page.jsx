@@ -5,6 +5,7 @@ import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
 import { GamificationProvider } from '@/components/GamificationContext';
 import performanceUtils from '@/lib/performance';
+import DataStatus from '@/components/DataStatus';
 
 const About = dynamic(() => import('@/components/About'), {
   loading: () => <div className="h-96 flex items-center justify-center"><div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-64 w-full rounded-lg"></div></div>
@@ -30,20 +31,38 @@ const FloatingElements = dynamic(() => import('@/components/FloatingElements'), 
 
 async function getPortfolioData() {
   try {
-    const res = await fetch('https://tarunsingh611.github.io/CDN-oneServer/portfolio.json', {
-      next: { revalidate: 3600 }, // Cache for 1 hour
+    console.log('🔄 [SERVER] Fetching portfolio data...');
+    const startTime = Date.now();
+    
+    // Use API route for portfolio data
+    const res = await fetch('http://localhost:3000/api/portfolio', {
+      cache: 'no-store', // Disable caching
       headers: {
-        'Cache-Control': 'public, max-age=3600, stale-while-revalidate=86400',
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
       },
     });
 
+    const endTime = Date.now();
+    console.log(`✅ [SERVER] Portfolio data fetched in ${endTime - startTime}ms`);
+
     if (!res.ok) {
-      throw new Error('Failed to fetch portfolio data');
+      throw new Error(`Failed to fetch portfolio data: ${res.status} ${res.statusText}`);
     }
 
-    return res.json();
+    const data = await res.json();
+    console.log('📊 [SERVER] Portfolio data loaded:', data.personal?.name);
+    console.log('📊 [SERVER] Data structure:', {
+      personal: !!data.personal,
+      aboutMe: !!data.aboutMe,
+      projects: data.projects?.length || 0,
+      experiences: data.experiences?.length || 0,
+      skills: !!data.skills
+    });
+    return data;
   } catch (error) {
-    console.error('Error fetching portfolio data:', error);
+    console.error('❌ [SERVER] Error fetching portfolio data:', error);
     // Return null if external API fails - will show loading state
     return null;
   }
@@ -127,20 +146,23 @@ export default async function Home() {
           <ProgressTracker />
           <FloatingElements />
           
-          {/* Content */}
-          <div className="relative z-10">
-            <Navbar personal={portfolioData?.personal} />
-            <Hero portfolioData={portfolioData} />
-            <About aboutMe={portfolioData?.aboutMe} />
-            <Projects projects={portfolioData?.projects} />
-            <Skills skills={portfolioData?.skills} />
-            <Timeline
-              experiences={portfolioData?.experiences}
-              education={portfolioData?.education}
-            />
-            <Contact contacts={portfolioData?.contacts} />
-            <Footer personal={portfolioData?.personal} />
-          </div>
+                     {/* Data Status Indicator */}
+           <DataStatus portfolioData={portfolioData} />
+           
+           {/* Content */}
+           <div className="relative z-10">
+             <Navbar personal={portfolioData?.personal} />
+             <Hero portfolioData={portfolioData} />
+             <About aboutMe={portfolioData?.aboutMe} />
+             <Projects projects={portfolioData?.projects} />
+             <Skills skills={portfolioData?.skills} />
+             <Timeline
+               experiences={portfolioData?.experiences}
+               education={portfolioData?.education}
+             />
+             <Contact contacts={portfolioData?.contacts} />
+             <Footer personal={portfolioData?.personal} />
+           </div>
         </main>
       </>
     </GamificationProvider>

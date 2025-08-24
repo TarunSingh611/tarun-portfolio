@@ -8,10 +8,10 @@ const Footer = ({ personal }) => {
   };
 
   const socialLinks = [
-    { icon: Github, href: `https://${personal?.github}`, label: 'GitHub', external: true },
-    { icon: Linkedin, href: `https://${personal?.linkedin}`, label: 'LinkedIn', external: true },
-    { icon: Twitter, href: `https://${personal?.twitter}`, label: 'Twitter', external: true },
-    { icon: Instagram, href: `https://${personal?.instagram}`, label: 'Instagram', external: true },
+    { icon: Github, href: personal?.github?.startsWith('http') ? personal.github : `https://${personal?.github}`, label: 'GitHub', external: true },
+    { icon: Linkedin, href: personal?.linkedin?.startsWith('http') ? personal.linkedin : `https://${personal?.linkedin}`, label: 'LinkedIn', external: true },
+    { icon: Twitter, href: personal?.twitter?.startsWith('http') ? personal.twitter : `https://${personal?.twitter}`, label: 'Twitter', external: true },
+    { icon: Instagram, href: personal?.instagram?.startsWith('http') ? personal.instagram : `https://${personal?.instagram}`, label: 'Instagram', external: true },
     { icon: Mail, href: `mailto:${personal?.email}`, label: 'Email', external: false },
   ];
 

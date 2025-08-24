@@ -329,6 +329,12 @@ The portfolio data is loaded from a JSON file that can be customized:
 - Adjust 3D background parameters
 - Update gamification achievements
 
+### **Data Updates**
+- **No Caching**: The portfolio has been configured to disable all caching mechanisms
+- **Instant Updates**: Changes to `portfolio.json` will reflect immediately on the site
+- **Cache Busting**: Timestamp parameters are added to prevent browser caching
+- **Service Worker Removed**: No service worker interference with data updates
+
 ---
 
 ## 🤝 **Contributing**
@@ -447,6 +453,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-View%20Live-00D4AA?style=for-the-badge&logo=vercel&logoColor=white)](https://tarunsinghrajput.netlify.app)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/TarunSingh611)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/tarun-singh-rajput)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/tarunsinghrajput)
 
 </div>

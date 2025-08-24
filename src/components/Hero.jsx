@@ -247,7 +247,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={`https://${portfolioData.personal.linkedin}`}
+              href={portfolioData.personal.linkedin.startsWith('http') ? portfolioData.personal.linkedin : `https://${portfolioData.personal.linkedin}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
@@ -257,7 +257,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={`https://${portfolioData.personal.github}`}
+              href={portfolioData.personal.github.startsWith('http') ? portfolioData.personal.github : `https://${portfolioData.personal.github}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
@@ -267,7 +267,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={`https://${portfolioData.personal.twitter}`}
+              href={portfolioData.personal.twitter.startsWith('http') ? portfolioData.personal.twitter : `https://${portfolioData.personal.twitter}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
@@ -277,7 +277,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={`https://${portfolioData.personal.instagram}`}
+              href={portfolioData.personal.instagram.startsWith('http') ? portfolioData.personal.instagram : `https://${portfolioData.personal.instagram}`}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"

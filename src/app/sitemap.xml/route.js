@@ -1,8 +1,16 @@
 export async function GET() {
   const baseUrl = 'https://tarunsinghrajput.netlify.app'; // Replace with your actual domain
 
-  // Fetch portfolio data
-  const portfolioData = await fetch('https://tarunsingh611.github.io/CDN-oneServer/portfolio.json')
+  // Fetch portfolio data with cache busting
+  const timestamp = Date.now();
+  const portfolioData = await fetch(`https://tarunsingh611.github.io/CDN-oneServer/portfolio.json?t=${timestamp}`, {
+    cache: 'no-store',
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+    },
+  })
     .then((res) => res.json())
     .catch(() => null);
 
