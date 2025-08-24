@@ -5,10 +5,12 @@ export async function GET() {
   const timestamp = Date.now();
   const portfolioData = await fetch(`https://tarunsingh611.github.io/CDN-oneServer/portfolio.json?t=${timestamp}`, {
     cache: 'no-store',
+    next: { revalidate: 0 }, // Disable Next.js caching
     headers: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
       'Pragma': 'no-cache',
       'Expires': '0',
+      'Surrogate-Control': 'no-store',
     },
   })
     .then((res) => res.json())
@@ -64,6 +66,10 @@ export async function GET() {
   return new Response(xml, {
     headers: {
       'Content-Type': 'application/xml',
+      'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+      'Expires': '0',
+      'Surrogate-Control': 'no-store',
     },
   });
 }

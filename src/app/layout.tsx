@@ -97,33 +97,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/images/profile/Avatar.png" />
         
-        {/* Cache Busting Script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              // Clear any existing service worker registrations
-              if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                  for(let registration of registrations) {
-                    registration.unregister();
-                  }
-                });
-              }
-              
-              // Clear browser cache for portfolio data
-              if ('caches' in window) {
-                caches.keys().then(function(names) {
-                  for (let name of names) {
-                    caches.delete(name);
-                  }
-                });
-              }
-            `,
-          }}
-        />
-        
-
-        
         {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"

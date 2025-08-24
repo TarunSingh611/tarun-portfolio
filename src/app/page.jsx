@@ -37,10 +37,12 @@ async function getPortfolioData() {
     // Use API route for portfolio data
     const res = await fetch('http://localhost:3000/api/portfolio', {
       cache: 'no-store', // Disable caching
+      next: { revalidate: 0 }, // Disable Next.js caching
       headers: {
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
         'Pragma': 'no-cache',
         'Expires': '0',
+        'Surrogate-Control': 'no-store',
       },
     });
 

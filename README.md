@@ -329,11 +329,15 @@ The portfolio data is loaded from a JSON file that can be customized:
 - Adjust 3D background parameters
 - Update gamification achievements
 
-### **Data Updates**
-- **No Caching**: The portfolio has been configured to disable all caching mechanisms
+### **Data Updates & Caching Strategy**
+- **API Data - No Caching**: All API endpoints have zero caching to ensure fresh data
+- **Static Assets - 1 Hour Cache**: Images and fonts are cached for 1 hour for performance
 - **Instant Updates**: Changes to `portfolio.json` will reflect immediately on the site
 - **Cache Busting**: Timestamp parameters are added to prevent browser caching
 - **Service Worker Removed**: No service worker interference with data updates
+- **Comprehensive Headers**: Multiple cache control headers ensure no caching for API data
+
+For detailed caching strategy, see [CACHING_STRATEGY.md](./CACHING_STRATEGY.md)
 
 ---
 

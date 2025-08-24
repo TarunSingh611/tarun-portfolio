@@ -19,6 +19,10 @@ export default function ContactForm() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+          'Surrogate-Control': 'no-store',
         },
         body: JSON.stringify(formData),
       });
