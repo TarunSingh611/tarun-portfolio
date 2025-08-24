@@ -406,7 +406,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### **Get Help**
 - 📧 **Email**: thakurtarun936@gmail.com
-- 💬 **LinkedIn**: [Tarun Singh](https://linkedin.com/in/tarun-singh-rajput)
+- 💬 **LinkedIn**: [Tarun Singh](https://www.linkedin.com/in/tarunsinghrajput/)
 - 🐦 **Twitter**: [@tarun__sr](https://x.com/tarun__sr)
 - 📱 **Phone**: +91 7006072897
 
