@@ -10,7 +10,7 @@ export async function GET() {
     const filePath = path.join(process.cwd(), 'public', 'assests', 'portfolio.json');
     const fileContent = fs.readFileSync(filePath, 'utf8');
     portfolioData = JSON.parse(fileContent);
-  } catch (error) {
+  } catch {
     // Silently handle error
   }
 

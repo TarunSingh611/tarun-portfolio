@@ -1,6 +1,6 @@
 'use client';
 import { motion, useInView } from 'framer-motion';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Mail, Phone, MapPin, MessageSquare } from 'lucide-react';
 import ContactForm from './ContactForm';
 

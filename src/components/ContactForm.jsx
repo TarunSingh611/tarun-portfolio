@@ -33,7 +33,7 @@ export default function ContactForm() {
       } else {
         toast.error('Failed to send email.');
       }
-    } catch (error) {
+    } catch {
       toast.error('An error occurred. Please try again later.');
     }
   };

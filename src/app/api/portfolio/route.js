@@ -18,7 +18,7 @@ export async function GET() {
         'Content-Type': 'application/json',
       },
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to load portfolio data' },
       { status: 500 }

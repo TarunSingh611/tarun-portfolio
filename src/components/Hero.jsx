@@ -89,7 +89,7 @@ const Hero = ({ portfolioData }) => {
     setIsDownloading(true);
     try {
       await downloadCV(portfolioData);
-    } catch (error) {
+    } catch {
       // Handle error silently
     } finally {
       setIsDownloading(false);

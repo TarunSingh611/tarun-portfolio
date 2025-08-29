@@ -1,6 +1,6 @@
 'use client';
 import { motion, useInView } from 'framer-motion';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Briefcase, GraduationCap, MapPin, Calendar, ArrowRight } from 'lucide-react';
 
 

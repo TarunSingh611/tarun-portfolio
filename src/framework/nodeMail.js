@@ -60,7 +60,7 @@ const sendEmail = async (formData) => {
     };
     await transporter.sendMail(mailOptions);
     return true;
-  } catch (error) {
+  } catch {
     return false;
   }
 };

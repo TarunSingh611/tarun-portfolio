@@ -34,7 +34,7 @@ async function getPortfolioData() {
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const portfolioData = JSON.parse(fileContent);
     return portfolioData;
-  } catch (error) {
+  } catch {
     // Return null if file read fails - will show loading state
     return null;
   }

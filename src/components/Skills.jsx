@@ -1,7 +1,7 @@
 'use client';
 // File: src/components/Skills.js
 import { motion, useInView } from 'framer-motion';
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
 import { Code, Database, Palette, Wrench, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

@@ -1,7 +1,7 @@
 'use client';  
 // File: src/components/About.js  
-import { motion, useInView } from 'framer-motion';  
-import { useRef, useEffect } from 'react';  
+import { motion, useInView } from 'framer-motion';
+import { useRef } from 'react';  
 import Image from 'next/image';
 
 

@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Github, ArrowLeft, ArrowRight, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
