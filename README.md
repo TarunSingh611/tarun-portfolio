@@ -48,7 +48,6 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 
 ### 🌟 **Key Features**
 
-- **🎮 Gamification System** - Interactive achievements and progress tracking
 - **🎨 3D Background** - Dynamic Three.js particle system and floating elements
 - **📱 Responsive Design** - Optimized for all devices and screen sizes
 - **⚡ Performance Optimized** - Next.js 14 with App Router and SSR
@@ -56,7 +55,6 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 - **📄 Dynamic CV Generation** - Real-time PDF generation with portfolio data
 - **🔗 Contact Integration** - Functional contact form with email notifications
 - **🌙 Dark/Light Theme** - Adaptive theme system
-- **📊 Progress Tracking** - User engagement analytics and statistics
 
 ---
 
@@ -115,7 +113,7 @@ EMAIL_HOST=smtp.gmail.com
 EMAIL_PORT=587
 
 # Portfolio Data URL (optional)
-PORTFOLIO_DATA_URL=https://tarunsingh611.github.io/CDN-oneServer/portfolio.json
+# Portfolio data is now loaded from local JSON file: public/assests/portfolio.json
 ```
 
 ### Development
@@ -169,12 +167,9 @@ tarun-portfolio/
 │   │   ├── 3DBackground.jsx     # Three.js background
 │   │   ├── About.jsx            # About section
 │   │   ├── ContactForm.jsx      # Contact form
-│   │   ├── FloatingElements.jsx # Floating UI elements
-│   │   ├── GamificationContext.jsx # Gamification system
 │   │   ├── Hero.jsx             # Hero section
 │   │   ├── Navbar.jsx           # Navigation
 │   │   ├── Projects.jsx         # Projects showcase
-│   │   ├── ProgressTracker.jsx  # Progress tracking
 │   │   ├── Skills.jsx           # Skills section
 │   │   └── Timeline.jsx         # Experience timeline
 │   ├── 📁 framework/            # Backend utilities
@@ -188,35 +183,7 @@ tarun-portfolio/
 └── README.md                   # Project documentation
 ```
 
----
 
-## 🎮 **Gamification Features**
-
-The portfolio includes an interactive gamification system to enhance user engagement:
-
-### 🏆 **Achievements**
-- **First Visit** - Welcome achievement for new visitors
-- **Project Hunter** - Awarded for exploring projects section
-- **Skill Master** - Unlocked when viewing skills
-- **CV Collector** - Earned by downloading resume
-- **Networker** - Given for contacting via form
-- **Completionist** - Awarded for exploring all sections
-
-### 📊 **Progress Tracking**
-- Section visit tracking
-- Time spent on portfolio
-- User interactions count
-- Scroll depth analytics
-- Achievement unlock notifications
-
-### 🎯 **Interactive Elements**
-- Floating particles and elements
-- Smooth scroll animations
-- Hover effects and transitions
-- Progress indicators
-- Achievement notifications
-
----
 
 ## 🎨 **Design Features**
 
@@ -327,7 +294,6 @@ The portfolio data is loaded from a JSON file that can be customized:
 - Modify component styles in `src/components/`
 - Customize animations in Framer Motion
 - Adjust 3D background parameters
-- Update gamification achievements
 
 ### **Data Updates & Caching Strategy**
 - **API Data - No Caching**: All API endpoints have zero caching to ensure fresh data

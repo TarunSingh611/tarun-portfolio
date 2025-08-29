@@ -4,41 +4,33 @@ import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Github, ArrowLeft, ArrowRight, Globe } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
-import { useGamification } from './GamificationContext';
+
 
 export default function Projects({ projects }) {
   const [currentIndex, setCurrentIndex] = useState(Math.floor(projects.length / 2));
   const [direction, setDirection] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { markSectionVisited, unlockAchievement, setStats } = useGamification();
 
-  useEffect(() => {
-    if (isInView) {
-      markSectionVisited('projects');
-      unlockAchievement('viewedProjects');
-    }
-  }, [isInView, markSectionVisited, unlockAchievement]);
+
+
 
   const handleNext = useCallback(() => {
     setDirection(1);
     setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
-    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
-  }, [projects.length, setStats]);
+  }, [projects.length]);
 
   const handlePrev = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? projects.length - 1 : prevIndex - 1
     );
-    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
-  }, [projects.length, setStats]);
+  }, [projects.length]);
 
   const goToProject = useCallback((index) => {
     setDirection(index > currentIndex ? 1 : -1);
     setCurrentIndex(index);
-    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
-  }, [currentIndex, setStats]);
+  }, [currentIndex]);
 
   const cardVariants = useMemo(() => ({
     initial: (direction) => ({

@@ -340,8 +340,6 @@ export const downloadCV = async (portfolioData) => {
     console.log('CV PDF generated and downloaded successfully');
     return { success: true, message: 'CV downloaded successfully' };
   } catch (error) {
-    console.error('Error generating CV PDF:', error);
-    
     // Fallback to text version
     try {
       const cvData = generateCVFromData(portfolioData);
@@ -355,10 +353,8 @@ export const downloadCV = async (portfolioData) => {
       link.click();
       document.body.removeChild(link);
       window.URL.revokeObjectURL(url);
-      console.log('CV text version downloaded as fallback');
       return { success: true, message: 'CV text version downloaded' };
     } catch (fallbackError) {
-      console.error('Fallback also failed:', fallbackError);
       // Final fallback to HTML version
       window.open('/Tarun_Singh_CV.html', '_blank');
       return { success: false, message: 'Opening HTML version as fallback' };

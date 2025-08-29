@@ -89,10 +89,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         {/* Preload critical resources */}
         <link rel="preload" href="/images/profile/Avatar.png" as="image" type="image/png" />
         
-        {/* DNS prefetch for external domains */}
-        <link rel="dns-prefetch" href="https://tarunsingh611.github.io" />
-        <link rel="dns-prefetch" href="https://api.placeholder.com" />
-        
         {/* PWA Manifest */}
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/images/profile/Avatar.png" />

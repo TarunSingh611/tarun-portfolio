@@ -61,7 +61,6 @@ const sendEmail = async (formData) => {
     await transporter.sendMail(mailOptions);
     return true;
   } catch (error) {
-    console.error("Error sending email:", error);
     return false;
   }
 };

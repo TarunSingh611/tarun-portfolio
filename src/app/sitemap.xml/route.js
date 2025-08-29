@@ -1,20 +1,18 @@
+import fs from 'fs';
+import path from 'path';
+
 export async function GET() {
   const baseUrl = 'https://tarunsinghrajput.netlify.app'; // Replace with your actual domain
 
-  // Fetch portfolio data with cache busting
-  const timestamp = Date.now();
-  const portfolioData = await fetch(`https://tarunsingh611.github.io/CDN-oneServer/portfolio.json?t=${timestamp}`, {
-    cache: 'no-store',
-    next: { revalidate: 0 }, // Disable Next.js caching
-    headers: {
-      'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-      'Pragma': 'no-cache',
-      'Expires': '0',
-      'Surrogate-Control': 'no-store',
-    },
-  })
-    .then((res) => res.json())
-    .catch(() => null);
+  // Read portfolio data from local JSON file
+  let portfolioData = null;
+  try {
+    const filePath = path.join(process.cwd(), 'public', 'assests', 'portfolio.json');
+    const fileContent = fs.readFileSync(filePath, 'utf8');
+    portfolioData = JSON.parse(fileContent);
+  } catch (error) {
+    // Silently handle error
+  }
 
   const pages = [
     { path: '/', priority: 1.0, changefreq: 'weekly' },

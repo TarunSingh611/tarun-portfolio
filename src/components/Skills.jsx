@@ -4,23 +4,16 @@ import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect } from 'react';
 import { Code, Database, Palette, Wrench, Zap } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useGamification } from './GamificationContext';
+
 
 export default function Skills({ skills }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { markSectionVisited, unlockAchievement, setStats } = useGamification();
 
-  useEffect(() => {
-    if (isInView) {
-      markSectionVisited('skills');
-      unlockAchievement('viewedSkills');
-    }
-  }, [isInView, markSectionVisited, unlockAchievement]);
 
-  const handleSkillClick = () => {
-    setStats(prev => ({ ...prev, interactions: prev.interactions + 1 }));
-  };
+
+
+
 
   const skillIcons = {
     languages: Code,
@@ -132,7 +125,6 @@ export default function Skills({ skills }) {
                       transition={{ duration: 0.4, delay: 0.4 + categoryIndex * 0.1 + index * 0.05 }}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={handleSkillClick}
                       className="relative group/skill cursor-pointer"
                     >
                       <div className={cn(

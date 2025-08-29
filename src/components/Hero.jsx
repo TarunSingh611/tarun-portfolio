@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { Download, Mail, Linkedin, Github, Twitter, Instagram } from "lucide-react";
 import { downloadCV } from "../lib/cvGenerator";
-import { useGamification } from "./GamificationContext";
 
 // Client-side only floating particles component
 const FloatingParticles = () => {
@@ -48,7 +47,7 @@ const Hero = ({ portfolioData }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  const { unlockAchievement } = useGamification();
+
 
   const texts = useMemo(() => [
     "Full Stack",
@@ -57,10 +56,7 @@ const Hero = ({ portfolioData }) => {
     "MERN Stack",
   ], []);
 
-  useEffect(() => {
-    // Unlock first visit achievement
-    unlockAchievement('firstVisit');
-  }, [unlockAchievement]);
+
 
   useEffect(() => {
     const currentText = texts[currentTextIndex];
@@ -93,10 +89,8 @@ const Hero = ({ portfolioData }) => {
     setIsDownloading(true);
     try {
       await downloadCV(portfolioData);
-      // Unlock CV download achievement
-      unlockAchievement('downloadedCV');
     } catch (error) {
-      console.error('Error downloading CV:', error);
+      // Handle error silently
     } finally {
       setIsDownloading(false);
     }

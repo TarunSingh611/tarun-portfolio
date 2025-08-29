@@ -2,19 +2,14 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useEffect } from 'react';
 import { Briefcase, GraduationCap, MapPin, Calendar, ArrowRight } from 'lucide-react';
-import { useGamification } from './GamificationContext';
+
 
 export default function Timeline({ experiences, education }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const { markSectionVisited, unlockAchievement } = useGamification();
 
-  useEffect(() => {
-    if (isInView) {
-      markSectionVisited('experience');
-      unlockAchievement('viewedExperience');
-    }
-  }, [isInView, markSectionVisited, unlockAchievement]);
+
+
 
   const allItems = [
     ...experiences.map(item => ({ ...item, type: 'experience' })),
