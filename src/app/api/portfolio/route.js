@@ -1,14 +1,8 @@
 import { NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
+import portfolioData from '@/data/portfolio.json';
 
 export async function GET() {
   try {
-    // Read the local portfolio.json file
-    const filePath = path.join(process.cwd(), 'public', 'assests', 'portfolio.json');
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const portfolioData = JSON.parse(fileContent);
-    
     return NextResponse.json(portfolioData, {
       headers: {
         'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',

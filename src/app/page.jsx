@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
-import Head from 'next/head';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Footer from '@/components/Footer';
+import portfolioData from '@/data/portfolio.json';
 
 const About = dynamic(() => import('@/components/About'), {
   loading: () => <div className="h-96 flex items-center justify-center"><div className="animate-pulse bg-gray-200 dark:bg-gray-700 h-64 w-full rounded-lg"></div></div>
@@ -24,20 +24,9 @@ const ThreeDBackground = dynamic(() => import('@/components/3DBackground'), {
   loading: () => <div className="fixed inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900" />
 });
 
-import fs from 'fs';
-import path from 'path';
 
 async function getPortfolioData() {
-  try {
-    // Read the local portfolio.json file directly
-    const filePath = path.join(process.cwd(), 'public', 'assests', 'portfolio.json');
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    const portfolioData = JSON.parse(fileContent);
-    return portfolioData;
-  } catch {
-    // Return null if file read fails - will show loading state
-    return null;
-  }
+  return portfolioData;
 }
 
 export default async function Home() {
@@ -56,31 +45,6 @@ export default async function Home() {
 
   return (
     <>
-      <Head>
-        <title>{portfolioData.personal.name} | {portfolioData.personal.title}</title>
-        <meta name="description" content={portfolioData.aboutMe.summary} />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="keywords" content={`${portfolioData.personal.name}, ${portfolioData.personal.title}, Next.js, React, Web Development, Software Engineer`} />
-        <meta name="author" content={portfolioData.personal.name} />
-        <link rel="icon" href="/favicon.ico" />
-        
-        {/* Preload critical resources */}
-        <link rel="preload" href={portfolioData.aboutMe.image.imgSrc} as="image" />
-        
-        {/* Open Graph */}
-        <meta property="og:title" content={`${portfolioData.personal.name} | ${portfolioData.personal.title}`} />
-        <meta property="og:description" content={portfolioData.aboutMe.summary} />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={portfolioData.personal.website} />
-        <meta property="og:image" content={portfolioData.aboutMe.image.imgSrc} />
-        
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${portfolioData.personal.name} | ${portfolioData.personal.title}`} />
-        <meta name="twitter:description" content={portfolioData.aboutMe.summary} />
-        <meta name="twitter:image" content={portfolioData.aboutMe.image.imgSrc} />
-      </Head>
-      
       <main className="relative min-h-screen">
         {/* 3D Background */}
         <ThreeDBackground />

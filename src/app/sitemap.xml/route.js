@@ -1,18 +1,10 @@
-import fs from 'fs';
-import path from 'path';
+import portfolioData from '@/data/portfolio.json';
 
 export async function GET() {
   const baseUrl = 'https://tarunsinghrajput.netlify.app'; // Replace with your actual domain
 
   // Read portfolio data from local JSON file
-  let portfolioData = null;
-  try {
-    const filePath = path.join(process.cwd(), 'public', 'assests', 'portfolio.json');
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    portfolioData = JSON.parse(fileContent);
-  } catch {
-    // Silently handle error
-  }
+  const data = portfolioData;
 
   const pages = [
     { path: '/', priority: 1.0, changefreq: 'weekly' },
@@ -21,7 +13,7 @@ export async function GET() {
   ];
 
   // Generate project URLs from API data
-  const projects = portfolioData?.projects || [];
+  const projects = data?.projects || [];
   const projectUrls = projects.map((project) => ({
     path: `/projects/${encodeURIComponent(
       project.title.toLowerCase().replace(/\s+/g, '-')

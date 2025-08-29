@@ -2,6 +2,9 @@
   command = "npm run build"
   publish = ".next"
 
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 [build.environment]
   NODE_VERSION = "20.18.0"
   NPM_VERSION = "10.0.0"
@@ -41,6 +44,6 @@
     Surrogate-Control = "no-store"
 
 [[redirects]]
-  from = "/*"
-  to = "/index.html"
+  from = "/favicon.ico"
+  to = "/favicon.ico"
   status = 200

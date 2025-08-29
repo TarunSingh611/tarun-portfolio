@@ -12,36 +12,6 @@ export default function About({ aboutMe }) {
 
     return (  
         <section id="about" className="relative py-20 overflow-hidden">  
-            {/* Background decoration */}  
-            <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-white to-purple-50/50 dark:from-slate-900/50 dark:via-slate-800 dark:to-slate-900/50" />  
-            
-            {/* Floating elements */}  
-            <div className="absolute inset-0 overflow-hidden">  
-                <motion.div  
-                    className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-r from-blue-400/10 to-purple-400/10 rounded-full blur-2xl"  
-                    animate={{  
-                        scale: [1, 1.2, 1],  
-                        opacity: [0.3, 0.6, 0.3],  
-                    }}  
-                    transition={{  
-                        duration: 8,  
-                        repeat: Infinity,  
-                        ease: "easeInOut",  
-                    }}  
-                />  
-                <motion.div  
-                    className="absolute bottom-20 right-10 w-40 h-40 bg-gradient-to-r from-purple-400/10 to-pink-400/10 rounded-full blur-2xl"  
-                    animate={{  
-                        scale: [1.2, 1, 1.2],  
-                        opacity: [0.4, 0.7, 0.4],  
-                    }}  
-                    transition={{  
-                        duration: 10,  
-                        repeat: Infinity,  
-                        ease: "easeInOut",  
-                    }}  
-                />  
-            </div>  
 
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">  
                 <motion.div  
@@ -116,32 +86,6 @@ export default function About({ aboutMe }) {
                                     />  
                                 </div>  
                             </motion.div>  
-
-                            {/* Decorative elements */}  
-                            <motion.div  
-                                className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-20 blur-xl"  
-                                animate={{  
-                                    scale: [1, 1.2, 1],  
-                                    opacity: [0.2, 0.4, 0.2],  
-                                }}  
-                                transition={{  
-                                    duration: 4,  
-                                    repeat: Infinity,  
-                                    ease: "easeInOut",  
-                                }}  
-                            />  
-                            <motion.div  
-                                className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-purple-500 to-pink-600 rounded-full opacity-20 blur-xl"  
-                                animate={{  
-                                    scale: [1.2, 1, 1.2],  
-                                    opacity: [0.3, 0.5, 0.3],  
-                                }}  
-                                transition={{  
-                                    duration: 6,  
-                                    repeat: Infinity,  
-                                    ease: "easeInOut",  
-                                }}  
-                            />  
                         </div>  
                     </motion.div>  
                 </div>  

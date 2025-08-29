@@ -21,7 +21,6 @@
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.1-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
 ![Framer Motion](https://img.shields.io/badge/Framer%20Motion-10.18.0-0055FF?style=for-the-badge&logo=framer&logoColor=white)
-![Three.js](https://img.shields.io/badge/Three.js-0.161.0-000000?style=for-the-badge&logo=three.js&logoColor=white)
 
 </div>
 
@@ -48,7 +47,6 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 
 ### 🌟 **Key Features**
 
-- **🎨 3D Background** - Dynamic Three.js particle system and floating elements
 - **📱 Responsive Design** - Optimized for all devices and screen sizes
 - **⚡ Performance Optimized** - Next.js 14 with App Router and SSR
 - **🎯 Interactive Elements** - Smooth animations with Framer Motion
@@ -64,8 +62,6 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 |----------|-------------|
 | **Frontend Framework** | Next.js 14, React 18, TypeScript |
 | **Styling** | Tailwind CSS, CSS Modules |
-| **Animations** | Framer Motion, Three.js |
-| **3D Graphics** | Three.js, WebGL |
 | **State Management** | React Context, Custom Hooks |
 | **Form Handling** | React Hook Form, Validation |
 | **PDF Generation** | jsPDF, html2canvas |
@@ -79,8 +75,8 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 
 ### Prerequisites
 
-- Node.js 18+ 
-- npm or yarn
+- Node.js 20.18+ (required)
+- npm 10+ (or yarn)
 - Git
 
 ### Installation
@@ -188,8 +184,6 @@ tarun-portfolio/
 ## 🎨 **Design Features**
 
 ### **3D Background System**
-- Dynamic particle system using Three.js
-- Floating geometric shapes
 - Interactive mouse tracking
 - Performance-optimized rendering
 - Responsive canvas sizing
