@@ -1,6 +1,4 @@
 import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config();
 
 const {
   EMAIL_ADDRESS,
@@ -8,12 +6,26 @@ const {
   EMAIL_SERVER,
   EMAIL_NAME,
   EMAIL_PORT,
+  EMAIL_TO,
 } = process.env;
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
 
 const sendEmail = async (formData) => {
   const { name, email, message } = formData;
+  const port = Number(EMAIL_PORT);
 
-  // Create an email template
+  if (!EMAIL_ADDRESS || !EMAIL_PASSWORD || !EMAIL_SERVER || !port) {
+    return false;
+  }
+
   const emailTemplate = `
   <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
     <div style="background-color: #f7f7f7; padding: 20px; border-radius: 8px;">
@@ -22,15 +34,15 @@ const sendEmail = async (formData) => {
       <table style="width: 100%; border-collapse: collapse;">
         <tr>
           <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f0f0f0;">Name:</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${name}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(name)}</td>
         </tr>
         <tr>
           <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f0f0f0;">Email:</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${email}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(email)}</td>
         </tr>
         <tr>
           <td style="padding: 8px; border: 1px solid #ddd; font-weight: bold; background-color: #f0f0f0;">Message:</td>
-          <td style="padding: 8px; border: 1px solid #ddd;">${message}</td>
+          <td style="padding: 8px; border: 1px solid #ddd;">${escapeHtml(message)}</td>
         </tr>
       </table>
     </div>
@@ -40,25 +52,24 @@ const sendEmail = async (formData) => {
   </div>
 `;
 
-
   try {
     const transporter = nodemailer.createTransport({
       host: EMAIL_SERVER,
-      port: EMAIL_PORT,
-      secure: EMAIL_PORT == 465, // true for 465, false for other ports
+      port,
+      secure: port === 465,
       auth: {
         user: EMAIL_ADDRESS,
         pass: EMAIL_PASSWORD,
       },
     });
 
-    const mailOptions = {
-      from: `"${EMAIL_NAME}" <${EMAIL_ADDRESS}>`,
-      to: "tarunsrajput25@gmail.com", // Change this to your email address
+    await transporter.sendMail({
+      from: `"${EMAIL_NAME || "Portfolio"}" <${EMAIL_ADDRESS}>`,
+      to: EMAIL_TO || "tarunsrajput25@gmail.com",
+      replyTo: email,
       subject: "Portfolio Contact Form Submission",
       html: emailTemplate,
-    };
-    await transporter.sendMail(mailOptions);
+    });
     return true;
   } catch {
     return false;

@@ -1,10 +1,124 @@
 'use client';
 import { useState, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
-import { Github, ArrowLeft, ArrowRight, Globe } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Globe } from 'lucide-react';
+import { Github } from '@/components/BrandIcons';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
+function ProjectCard({ project, isActive, onView }) {
+  return (
+    <motion.div
+      className={cn(
+        "relative group perspective-1000 transition-all duration-300 ease-in-out",
+        isActive ? "w-full max-w-4xl" : "w-80"
+      )}
+      whileHover={{ scale: isActive ? 1.01 : 1.03 }}
+      transition={{ duration: 0.2 }}
+    >
+      <div className={cn(
+        "relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 ease-in-out",
+        isActive ? "h-[400px] sm:h-[450px]" : "h-72"
+      )}>
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/50 via-purple-600/50 to-pink-600/50" />
+
+        <div className="relative h-2/3 overflow-hidden">
+          <Image
+            src={project?.image}
+            alt={project?.title}
+            width={600}
+            height={400}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            priority={isActive}
+            loading={isActive ? "eager" : "lazy"}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+        </div>
+
+        <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+          >
+            <h3 className="text-xl sm:text-2xl font-bold mb-2 project-card-text drop-shadow-lg">{project?.title}</h3>
+            {isActive && (
+              <>
+                <p className="project-card-description mb-4 line-clamp-2 text-sm sm:text-base drop-shadow-md">
+                  {project?.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project?.techStack?.slice(0, 4).map((tech, index) => (
+                    <motion.span
+                      key={tech}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.2, delay: 0.2 + index * 0.05 }}
+                      className="px-2 sm:px-3 py-1 tech-tag backdrop-blur-sm rounded-full text-xs font-medium border drop-shadow-sm"
+                    >
+                      {tech}
+                    </motion.span>
+                  ))}
+                  {project?.techStack?.length > 4 && (
+                    <span className="px-2 sm:px-3 py-1 tech-tag backdrop-blur-sm rounded-full text-xs font-medium border drop-shadow-sm">
+                      +{project.techStack.length - 4}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                  {project?.link && (
+                    <motion.a
+                      href={project?.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 action-button backdrop-blur-sm rounded-lg border transition-all duration-200 text-sm font-medium"
+                    >
+                      <Globe className="w-4 h-4" />
+                      <span>Live Demo</span>
+                    </motion.a>
+                  )}
+                  {project?.github && (
+                    <motion.a
+                      href={project?.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 action-button backdrop-blur-sm rounded-lg border transition-all duration-200 text-sm font-medium"
+                    >
+                      <Github className="w-4 h-4" />
+                      <span>Code</span>
+                    </motion.a>
+                  )}
+                </div>
+              </>
+            )}
+          </motion.div>
+        </div>
+
+        {!isActive && (
+          <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={onView}
+              className="px-4 sm:px-6 py-2 sm:py-3 action-button backdrop-blur-sm rounded-lg border font-medium text-sm sm:text-base transition-all duration-200"
+            >
+              View Details
+            </motion.button>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Projects({ projects }) {
   const [currentIndex, setCurrentIndex] = useState(Math.floor(projects.length / 2));
@@ -62,122 +176,7 @@ export default function Projects({ projects }) {
     }),
   }), []);
 
-  const ProjectCard = useCallback(({ project, isActive }) => {
-    return (
-      <motion.div
-        className={cn(
-          "relative group perspective-1000 transition-all duration-300 ease-in-out",
-          isActive ? "w-full max-w-4xl" : "w-80"
-        )}
-        whileHover={{ scale: isActive ? 1.01 : 1.03 }}
-        transition={{ duration: 0.2 }}
-      >
-        <div className={cn(
-          "relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 ease-in-out",
-          isActive ? "h-[400px] sm:h-[450px]" : "h-72"
-        )}>
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-600/50 via-purple-600/50 to-pink-600/50" />
-          
-          {/* Image */}
-          <div className="relative h-2/3 overflow-hidden">
-            <Image
-              src={project?.image}
-              alt={project?.title}
-              width={600}
-              height={400}
-              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              priority={isActive}
-              loading={isActive ? "eager" : "lazy"}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-          </div>
 
-          {/* Content */}
-          <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-            >
-              <h3 className="text-xl sm:text-2xl font-bold mb-2 project-card-text drop-shadow-lg">{project?.title}</h3>
-              {isActive && (
-                <>
-                  <p className="project-card-description mb-4 line-clamp-2 text-sm sm:text-base drop-shadow-md">
-                    {project?.description}
-                  </p>
-                  
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project?.techStack?.slice(0, 4).map((tech, index) => (
-                      <motion.span
-                        key={tech}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.2, delay: 0.2 + index * 0.05 }}
-                        className="px-2 sm:px-3 py-1 tech-tag backdrop-blur-sm rounded-full text-xs font-medium border drop-shadow-sm"
-                      >
-                        {tech}
-                      </motion.span>
-                    ))}
-                    {project?.techStack?.length > 4 && (
-                      <span className="px-2 sm:px-3 py-1 tech-tag backdrop-blur-sm rounded-full text-xs font-medium border drop-shadow-sm">
-                        +{project.techStack.length - 4}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-                   {project?.link && <motion.a
-                      href={project?.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 action-button backdrop-blur-sm rounded-lg border transition-all duration-200 text-sm font-medium"
-                    >
-                      <Globe className="w-4 h-4" />
-                      <span>Live Demo</span>
-                    </motion.a>
-                    }
-                    {project?.github && <motion.a
-                      href={project?.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="flex items-center justify-center gap-2 px-3 sm:px-4 py-2 action-button backdrop-blur-sm rounded-lg border transition-all duration-200 text-sm font-medium"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>Code</span>
-                    </motion.a>}
-                  </div>
-                </>
-              )}
-            </motion.div>
-          </div>
-
-          {/* Hover overlay */}
-          {!isActive && (
-            <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => goToProject(projects.indexOf(project))}
-                className="px-4 sm:px-6 py-2 sm:py-3 action-button backdrop-blur-sm rounded-lg border font-medium text-sm sm:text-base transition-all duration-200"
-              >
-                View Details
-              </motion.button>
-            </div>
-          )}
-        </div>
-      </motion.div>
-    );
-  }, [goToProject, projects]);
 
   return (
     <section id="projects" className="relative py-16 overflow-hidden">
@@ -257,9 +256,10 @@ export default function Projects({ projects }) {
               exit="exit"
               className="w-full flex justify-center"
             >
-              <ProjectCard 
-                project={projects[currentIndex]} 
-                isActive={true}
+              <ProjectCard
+                project={projects[currentIndex]}
+                isActive
+                onView={() => goToProject(currentIndex)}
               />
             </motion.div>
           </AnimatePresence>

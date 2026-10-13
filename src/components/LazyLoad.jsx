@@ -4,19 +4,12 @@ import { useInView } from 'framer-motion';
 import Image from 'next/image';
 
 export default function LazyLoad({ children, threshold = 0.1, fallback = null }) {
-  const [isLoaded, setIsLoaded] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { threshold, once: true });
 
-  useEffect(() => {
-    if (isInView && !isLoaded) {
-      setIsLoaded(true);
-    }
-  }, [isInView, isLoaded]);
-
   return (
     <div ref={ref}>
-      {isLoaded ? children : fallback}
+      {isInView ? children : fallback}
     </div>
   );
 }

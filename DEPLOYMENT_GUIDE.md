@@ -4,7 +4,7 @@
 This guide helps you deploy your portfolio using modern build environments and avoid the deprecated Focal build image.
 
 ## Prerequisites
-- Node.js 20.18.0 or higher
+- Node.js 24 (Active LTS)
 - npm 10.0.0 or higher
 - Git
 
@@ -19,7 +19,7 @@ This guide helps you deploy your portfolio using modern build environments and a
 
 #### Manual Configuration
 The `vercel.json` file is already configured for modern deployment:
-- Uses Node.js 20.x runtime
+- Uses Node.js 24 runtime
 - Optimized build settings
 - Security headers configured
 - Service worker support
@@ -40,7 +40,7 @@ NEXT_PUBLIC_SITE_URL=https://your-domain.vercel.app
 
 #### Manual Configuration
 The `netlify.toml` file is already configured:
-- Node.js 20.18.0 specified
+- Node.js 24 specified
 - Build commands configured
 - Headers and redirects set up
 
@@ -60,8 +60,8 @@ The `netlify.toml` file is already configured:
 ## Build Environment Specifications
 
 ### Node.js Version
-- **Minimum**: 20.18.0
-- **Recommended**: Latest LTS (20.x)
+- **Required**: 24.x Active LTS
+- **Not yet**: 26.x is Current until 28 October 2026
 
 ### Package Manager
 - **npm**: 10.0.0 or higher
@@ -135,7 +135,7 @@ Specifies Node.js version for development and deployment.
 ## Migration from Focal Build Image
 
 ### What Changed
-- Updated to Node.js 20.x
+- Updated to Node.js 24
 - Modern build tools and optimizations
 - Enhanced security headers
 - Improved caching strategy

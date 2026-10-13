@@ -1,6 +1,8 @@
 'use client';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Instagram, Mail, ArrowUp } from 'lucide-react';
+import { ArrowUp, Mail } from 'lucide-react';
+import { Github, Instagram, Linkedin, Twitter } from '@/components/BrandIcons';
+import { toExternalHref } from '@/lib/utils';
 
 const Footer = ({ personal }) => {
   const scrollToTop = () => {
@@ -8,10 +10,10 @@ const Footer = ({ personal }) => {
   };
 
   const socialLinks = [
-    { icon: Github, href: personal?.github?.startsWith('http') ? personal.github : `https://${personal?.github}`, label: 'GitHub', external: true },
-    { icon: Linkedin, href: personal?.linkedin?.startsWith('http') ? personal.linkedin : `https://${personal?.linkedin}`, label: 'LinkedIn', external: true },
-    { icon: Twitter, href: personal?.twitter?.startsWith('http') ? personal.twitter : `https://${personal?.twitter}`, label: 'Twitter', external: true },
-    { icon: Instagram, href: personal?.instagram?.startsWith('http') ? personal.instagram : `https://${personal?.instagram}`, label: 'Instagram', external: true },
+    { icon: Github, href: toExternalHref(personal?.github), label: 'GitHub', external: true },
+    { icon: Linkedin, href: toExternalHref(personal?.linkedin), label: 'LinkedIn', external: true },
+    { icon: Twitter, href: toExternalHref(personal?.twitter), label: 'Twitter', external: true },
+    { icon: Instagram, href: toExternalHref(personal?.instagram), label: 'Instagram', external: true },
     { icon: Mail, href: `mailto:${personal?.email}`, label: 'Email', external: false },
   ];
 

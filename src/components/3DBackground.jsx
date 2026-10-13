@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
 export default function ThreeDBackground() {
@@ -7,7 +7,7 @@ export default function ThreeDBackground() {
   const sceneRef = useRef(null);
   const rendererRef = useRef(null);
   const animationIdRef = useRef(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const visibleRef = useRef(false);
 
   useEffect(() => {
     const mountElement = mountRef.current;
@@ -143,7 +143,7 @@ export default function ThreeDBackground() {
     // Intersection Observer for visibility
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        visibleRef.current = entry.isIntersecting;
       },
       { threshold: 0.1 }
     );
@@ -156,7 +156,7 @@ export default function ThreeDBackground() {
     let lastFrameTime = 0;
 
     const animate = (currentTime) => {
-      if (!isVisible) {
+      if (!visibleRef.current) {
         animationIdRef.current = requestAnimationFrame(animate);
         return;
       }
@@ -223,7 +223,7 @@ export default function ThreeDBackground() {
         cancelAnimationFrame(animationIdRef.current);
       }
       
-      if (mountElement && renderer.domElement) {
+      if (renderer.domElement.parentNode === mountElement) {
         mountElement.removeChild(renderer.domElement);
       }
       
@@ -236,7 +236,7 @@ export default function ThreeDBackground() {
       waveGeometry.dispose();
       waveMaterial.dispose();
     };
-  }, [isVisible]);
+  }, []);
 
   return (
     <div 

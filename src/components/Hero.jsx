@@ -2,43 +2,42 @@
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
-import { Download, Mail, Linkedin, Github, Twitter, Instagram } from "lucide-react";
+import { Download, Mail } from "lucide-react";
+import { Github, Instagram, Linkedin, Twitter } from "@/components/BrandIcons";
 import { downloadCV } from "../lib/cvGenerator";
+import { toExternalHref } from "@/lib/utils";
 
-// Client-side only floating particles component
-const FloatingParticles = () => {
-  const [mounted, setMounted] = useState(false);
+const PARTICLES = Array.from({ length: 50 }, (_, index) => ({
+  id: index,
+  left: `${(index * 37) % 100}%`,
+  top: `${(index * 53) % 100}%`,
+  duration: 2 + (index % 5) * 0.6,
+  delay: (index % 7) * 0.3,
+}));
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) return null;
-
-  return (
-    <div className="absolute inset-0 overflow-hidden">
-      {[...Array(50)].map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 bg-white/20 rounded-full"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-          }}
-          animate={{
-            y: [0, -100, 0],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: Math.random() * 3 + 2,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
-        />
-      ))}
-    </div>
-  );
-};
+const FloatingParticles = () => (
+  <div className="absolute inset-0 overflow-hidden">
+    {PARTICLES.map((particle) => (
+      <motion.div
+        key={particle.id}
+        className="absolute w-1 h-1 bg-white/20 rounded-full"
+        style={{
+          left: particle.left,
+          top: particle.top,
+        }}
+        animate={{
+          y: [0, -100, 0],
+          opacity: [0, 1, 0],
+        }}
+        transition={{
+          duration: particle.duration,
+          repeat: Infinity,
+          delay: particle.delay,
+        }}
+      />
+    ))}
+  </div>
+);
 
 const Hero = ({ portfolioData }) => {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -69,9 +68,11 @@ const Hero = ({ portfolioData }) => {
     }
 
     if (isDeleting && displayText === "") {
-      setIsDeleting(false);
-      setCurrentTextIndex((prev) => (prev + 1) % texts.length);
-      return;
+      const timer = setTimeout(() => {
+        setIsDeleting(false);
+        setCurrentTextIndex((prev) => (prev + 1) % texts.length);
+      }, 0);
+      return () => clearTimeout(timer);
     }
 
     const timer = setTimeout(() => {
@@ -241,7 +242,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={portfolioData.personal.linkedin.startsWith('http') ? portfolioData.personal.linkedin : `https://${portfolioData.personal.linkedin}`}
+              href={toExternalHref(portfolioData.personal.linkedin)}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
@@ -251,7 +252,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={portfolioData.personal.github.startsWith('http') ? portfolioData.personal.github : `https://${portfolioData.personal.github}`}
+              href={toExternalHref(portfolioData.personal.github)}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
@@ -261,7 +262,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={portfolioData.personal.twitter.startsWith('http') ? portfolioData.personal.twitter : `https://${portfolioData.personal.twitter}`}
+              href={toExternalHref(portfolioData.personal.twitter)}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
@@ -271,7 +272,7 @@ const Hero = ({ portfolioData }) => {
             </a>
             
             <a
-              href={portfolioData.personal.instagram.startsWith('http') ? portfolioData.personal.instagram : `https://${portfolioData.personal.instagram}`}
+              href={toExternalHref(portfolioData.personal.instagram)}
               target="_blank"
               rel="noopener noreferrer"
               className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"

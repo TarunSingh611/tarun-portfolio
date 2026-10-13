@@ -9,20 +9,19 @@ export default function ContactForm() {
     email: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
+    setIsSubmitting(true);
 
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
-          'Pragma': 'no-cache',
-          'Expires': '0',
-          'Surrogate-Control': 'no-store',
         },
         body: JSON.stringify(formData),
       });
@@ -30,11 +29,15 @@ export default function ContactForm() {
       if (response.ok) {
         toast.success('Email sent successfully!');
         setFormData({ name: '', email: '', message: '' });
+      } else if (response.status === 429) {
+        toast.error('Too many messages. Try again later.');
       } else {
         toast.error('Failed to send email.');
       }
     } catch {
       toast.error('An error occurred. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -57,6 +60,8 @@ export default function ContactForm() {
           name="name"
           value={formData.name}
           onChange={handleChange}
+          maxLength={100}
+          autoComplete="name"
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
         />
@@ -72,6 +77,8 @@ export default function ContactForm() {
           name="email"
           value={formData.email}
           onChange={handleChange}
+          maxLength={254}
+          autoComplete="email"
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
         />
@@ -87,6 +94,7 @@ export default function ContactForm() {
           rows={4}
           value={formData.message}
           onChange={handleChange}
+          maxLength={5000}
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
           required
         ></textarea>
@@ -94,9 +102,10 @@ export default function ContactForm() {
 
       <button
         type="submit"
-        className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors"
+        disabled={isSubmitting}
+        className="w-full bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition-colors disabled:cursor-not-allowed disabled:opacity-60"
       >
-        Send Message
+        {isSubmitting ? 'Sending...' : 'Send Message'}
       </button>
     </form>
   );

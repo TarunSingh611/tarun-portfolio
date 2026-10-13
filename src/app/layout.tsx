@@ -2,6 +2,10 @@ import { ReactNode } from 'react';
 import './globals.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import portfolioData from '@/data/portfolio.json';
+import { toExternalHref } from '@/lib/utils';
+
+const siteUrl = portfolioData.personal.website;
 
 export const metadata = {
   title: 'Tarun Singh - Software Developer',
@@ -17,13 +21,13 @@ export const metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://tarunsinghrajput.netlify.app'),
+  metadataBase: new URL(siteUrl),
   alternates: {
     canonical: '/',
   },
   openGraph: {
     type: 'website',
-    url: 'https://tarunsinghrajput.netlify.app',
+    url: siteUrl,
     title: 'Tarun Singh - Software Developer',
     description:
       'Professional portfolio of Tarun Singh, showcasing projects, skills, and experiences.',
@@ -78,19 +82,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta charSet="UTF-8" />
-        <meta name="theme-color" content="#3b82f6" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Tarun Portfolio" />
-        
-        {/* Preload critical resources */}
         <link rel="preload" href="/images/profile/Avatar.png" as="image" type="image/png" />
-        
-        {/* PWA Manifest */}
-        <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/images/profile/Avatar.png" />
         
         {/* JSON-LD Structured Data */}
@@ -104,10 +96,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               jobTitle: "Software Developer",
               description:
                 "I'm a results-driven Software Developer with expertise in frontend technologies including React and Next.js.",
-              url: "https://tarunsinghrajput.netlify.app",
-              image: "https://tarunsinghrajput.netlify.app/images/profile/Avatar.png",
+              url: siteUrl,
+              image: `${siteUrl}/images/profile/Avatar.png`,
               sameAs: [
-                "github.com/tarunsingh611",
+                toExternalHref(portfolioData.personal.github),
+                toExternalHref(portfolioData.personal.linkedin),
+                toExternalHref(portfolioData.personal.twitter),
               ],
               worksFor: {
                 "@type": "Organization",

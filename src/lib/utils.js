@@ -5,6 +5,18 @@ export function cn(...inputs) {
   return twMerge(clsx(inputs));
 }
 
+export function toExternalHref(value) {
+  if (!value) return '';
+  if (
+    value.startsWith('http://') ||
+    value.startsWith('https://') ||
+    value.startsWith('mailto:')
+  ) {
+    return value;
+  }
+  return `https://${value}`;
+}
+
 export function formatDate(date) {
   return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',

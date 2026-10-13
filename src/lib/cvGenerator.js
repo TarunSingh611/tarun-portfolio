@@ -227,7 +227,7 @@ export const downloadCV = async (portfolioData) => {
       import('html2canvas')
     ]);
     
-    const { default: jsPDFClass } = jsPDF;
+    const jsPDFClass = jsPDF.jsPDF || jsPDF.default?.jsPDF || jsPDF.default;
     const { default: html2canvasClass } = html2canvas;
     
     // Convert HTML to canvas

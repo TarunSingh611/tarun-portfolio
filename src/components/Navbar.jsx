@@ -1,14 +1,38 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Sun, Moon, Code } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const darkModeListeners = new Set();
+
+function subscribeDarkMode(onStoreChange) {
+  darkModeListeners.add(onStoreChange);
+  return () => darkModeListeners.delete(onStoreChange);
+}
+
+function getDarkModeSnapshot() {
+  return localStorage.getItem('darkMode') === 'true';
+}
+
+function getDarkModeServerSnapshot() {
+  return false;
+}
+
+function writeDarkMode(isDarkMode) {
+  localStorage.setItem('darkMode', String(isDarkMode));
+  document.documentElement.classList.toggle('dark', isDarkMode);
+  darkModeListeners.forEach((listener) => listener());
+}
 
 export default function Navbar({ personal }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
+  const isDark = useSyncExternalStore(
+    subscribeDarkMode,
+    getDarkModeSnapshot,
+    getDarkModeServerSnapshot
+  );
   const [scrolled, setScrolled] = useState(false);
 
 
@@ -22,22 +46,11 @@ export default function Navbar({ personal }) {
   }, []);
 
   useEffect(() => {
-    const isDarkMode = localStorage.getItem('darkMode') === 'true';
-    setIsDark(isDarkMode);
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    }
-  }, []);
+    document.documentElement.classList.toggle('dark', isDark);
+  }, [isDark]);
 
   const toggleDarkMode = () => {
-    const newDarkMode = !isDark;
-    setIsDark(newDarkMode);
-    localStorage.setItem('darkMode', newDarkMode.toString());
-    if (newDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    writeDarkMode(!isDark);
   };
 
   const navItems = [

@@ -16,11 +16,11 @@
 
 <div align="center">
 
-![Next.js](https://img.shields.io/badge/Next.js-14.2.15-000000?style=for-the-badge&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Next.js](https://img.shields.io/badge/Next.js-16.4.0-000000?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-19.3.0-61DAFB?style=for-the-badge&logo=react&logoColor=black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.0.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4.1-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![Framer Motion](https://img.shields.io/badge/Framer%20Motion-10.18.0-0055FF?style=for-the-badge&logo=framer&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer%20Motion-14.2.0-0055FF?style=for-the-badge&logo=framer&logoColor=white)
 
 </div>
 
@@ -48,7 +48,7 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 ### 🌟 **Key Features**
 
 - **📱 Responsive Design** - Optimized for all devices and screen sizes
-- **⚡ Performance Optimized** - Next.js 14 with App Router and SSR
+- **⚡ Performance Optimized** - Next.js 16 with App Router and React 19
 - **🎯 Interactive Elements** - Smooth animations with Framer Motion
 - **📄 Dynamic CV Generation** - Real-time PDF generation with portfolio data
 - **🔗 Contact Integration** - Functional contact form with email notifications
@@ -60,7 +60,7 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 
 | Category | Technologies |
 |----------|-------------|
-| **Frontend Framework** | Next.js 14, React 18, TypeScript |
+| **Frontend Framework** | Next.js 16, React 19, TypeScript |
 | **Styling** | Tailwind CSS, CSS Modules |
 | **State Management** | React Context, Custom Hooks |
 | **Form Handling** | React Hook Form, Validation |
@@ -75,7 +75,7 @@ A modern, interactive portfolio website showcasing my skills, projects, and expe
 
 ### Prerequisites
 
-- Node.js 20.18+ (required)
+- Node.js 24 (Active LTS, required)
 - npm 10+ (or yarn)
 - Git
 

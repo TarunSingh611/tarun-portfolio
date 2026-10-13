@@ -1,14 +1,16 @@
 /** @type {import('next').NextConfig} */
+const securityHeaders = [
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'X-Frame-Options', value: 'DENY' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+];
+
 const nextConfig = {
-  reactStrictMode: false,
+  reactStrictMode: true,
   images: {
-    remotePatterns: [
-      { protocol: 'https', hostname: 'api.placeholder.com', pathname: '/**' },
-      { protocol: 'https', hostname: 'tarunsingh611.github.io', pathname: '/**' },
-      { protocol: 'https', hostname: 'tarunsinghrajput.netlify.app', pathname: '/**' },
-    ],
     formats: ['image/webp', 'image/avif'],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   experimental: {
@@ -19,35 +21,31 @@ const nextConfig = {
   },
   compress: true,
   poweredByHeader: false,
-  generateEtags: false,
-  swcMinify: true,
-  // Disable caching for all routes
   async headers() {
+    const headers = [...securityHeaders];
+
+    if (process.env.NODE_ENV === 'production') {
+      headers.push({
+        key: 'Strict-Transport-Security',
+        value: 'max-age=63072000; includeSubDomains',
+      });
+    }
+
     return [
       {
         source: '/api/:path*',
         headers: [
+          ...headers,
           {
             key: 'Cache-Control',
             value: 'no-cache, no-store, must-revalidate, max-age=0',
-          },
-          {
-            key: 'Pragma',
-            value: 'no-cache',
-          },
-          {
-            key: 'Expires',
-            value: '0',
-          },
-          {
-            key: 'Surrogate-Control',
-            value: 'no-store',
           },
         ],
       },
       {
         source: '/(.*)',
         headers: [
+          ...headers,
           {
             key: 'Cache-Control',
             value: 'public, max-age=3600, must-revalidate',
@@ -56,24 +54,6 @@ const nextConfig = {
       },
     ];
   },
-  // Ensure modern Node.js compatibility
-  webpack: (config, { dev, isServer }) => {
-    // Optimize for modern environments
-    if (!dev && !isServer) {
-      config.optimization.splitChunks = {
-        chunks: 'all',
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name: 'vendors',
-            chunks: 'all',
-          },
-        },
-      };
-    }
-    
-    return config;
-  },
-}
+};
 
 export default nextConfig;
