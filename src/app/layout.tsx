@@ -1,5 +1,16 @@
 import { ReactNode } from 'react';
+import { Fraunces, Outfit } from 'next/font/google';
 import './globals.css';
+
+const display = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
+});
+
+const sans = Outfit({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import portfolioData from '@/data/portfolio.json';
@@ -80,7 +91,7 @@ export const viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${display.variable} ${sans.variable}`}>
       <head>
         <link rel="preload" href="/images/profile/Avatar.png" as="image" type="image/png" />
         <link rel="apple-touch-icon" href="/images/profile/Avatar.png" />
@@ -111,7 +122,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
       </head>
-      <body className="bg-gray-50 dark:bg-gray-900">
+      <body className="bg-paper font-sans text-ink antialiased dark:bg-ink dark:text-paper">
         {children}
         <ToastContainer 
           position="bottom-right"

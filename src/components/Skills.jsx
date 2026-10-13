@@ -24,17 +24,17 @@ export default function Skills({ skills }) {
   };
 
   const skillColors = {
-    languages: 'from-blue-500 to-cyan-500',
-    frameworks: 'from-purple-500 to-pink-500',
-    libraries: 'from-green-500 to-emerald-500',
-    databases: 'from-orange-500 to-red-500',
-    tools: 'from-indigo-500 to-blue-500',
+    languages: 'from-ink to-copper',
+    frameworks: 'from-copper to-ink',
+    libraries: 'from-ink to-[#3f342c]',
+    databases: 'from-[#3f342c] to-copper',
+    tools: 'from-ink to-ink',
   };
 
   return (
     <section id="skills" className="relative py-20 overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800" />
+      <div className="absolute inset-0 bg-paper dark:bg-ink" />
       
       {/* Floating elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -84,7 +84,7 @@ export default function Skills({ skills }) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"
+            className="mx-auto h-px w-16 bg-copper"
           />
         </motion.div>
 

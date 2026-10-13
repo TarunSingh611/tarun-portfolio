@@ -34,7 +34,7 @@
 @layer components {
   /* Glass card effect */
   .card-glass {
-    @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 rounded-2xl shadow-xl;
+    @apply bg-paper/95 dark:bg-ink border border-ink/10 dark:border-paper/15 rounded-sm shadow-none;
   }
   
   /* Hover lift effect */
@@ -44,7 +44,7 @@
   
   /* Gradient text */
   .text-gradient-primary {
-    @apply bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent;
+    @apply font-display text-ink dark:text-paper tracking-tight;
   }
   
   /* Project card text styles */

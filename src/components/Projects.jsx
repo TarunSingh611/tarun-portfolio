@@ -20,7 +20,7 @@ function ProjectCard({ project, isActive, onView }) {
         "relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-300 ease-in-out",
         isActive ? "h-[400px] sm:h-[450px]" : "h-72"
       )}>
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/50 via-purple-600/50 to-pink-600/50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-ink/50 via-ink/20 to-copper/40" />
 
         <div className="relative h-2/3 overflow-hidden">
           <Image
@@ -121,25 +121,54 @@ function ProjectCard({ project, isActive, onView }) {
 }
 
 export default function Projects({ projects }) {
-  const [currentIndex, setCurrentIndex] = useState(Math.floor(projects.length / 2));
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  const [activeTag, setActiveTag] = useState('All');
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const studioTags = useMemo(() => {
+    const counts = new Map();
+    for (const project of projects) {
+      for (const tech of project.techStack ?? []) {
+        counts.set(tech, (counts.get(tech) ?? 0) + 1);
+      }
+    }
+    return [...counts.entries()]
+      .filter(([, count]) => count > 1)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 6)
+      .map(([tag]) => tag);
+  }, [projects]);
+
+  const visibleProjects = useMemo(
+    () =>
+      activeTag === 'All'
+        ? projects
+        : projects.filter((project) => project.techStack?.includes(activeTag)),
+    [projects, activeTag]
+  );
+
+  const selectTag = (tag) => {
+    setActiveTag(tag);
+    setCurrentIndex(0);
+    setDirection(0);
+  };
 
 
 
 
   const handleNext = useCallback(() => {
     setDirection(1);
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % projects.length);
-  }, [projects.length]);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % visibleProjects.length);
+  }, [visibleProjects.length]);
 
   const handlePrev = useCallback(() => {
     setDirection(-1);
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
+      prevIndex === 0 ? visibleProjects.length - 1 : prevIndex - 1
     );
-  }, [projects.length]);
+  }, [visibleProjects.length]);
 
   const goToProject = useCallback((index) => {
     setDirection(index > currentIndex ? 1 : -1);
@@ -181,7 +210,7 @@ export default function Projects({ projects }) {
   return (
     <section id="projects" className="relative py-16 overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-50/50 via-white to-blue-50/50 dark:from-slate-900/50 dark:via-slate-800 dark:to-slate-900/50" />
+      <div className="absolute inset-0 bg-paper dark:bg-ink" />
       
       {/* Floating elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -225,16 +254,38 @@ export default function Projects({ projects }) {
             transition={{ duration: 0.4, delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6"
           >
-            <span className="text-gradient-primary">Featured Projects</span>
+            <span className="text-gradient-primary">Selected work</span>
           </motion.h2>
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"
+            className="mx-auto h-px w-16 bg-copper"
           />
+          <div className="mt-8 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Filter work by technology">
+            {['All', ...studioTags].map((tag) => (
+              <button
+                key={tag}
+                type="button"
+                role="tab"
+                aria-selected={activeTag === tag}
+                onClick={() => selectTag(tag)}
+                className={`border px-3 py-1 text-xs uppercase tracking-[0.16em] transition ${
+                  activeTag === tag
+                    ? 'border-ink bg-ink text-paper dark:border-paper dark:bg-paper dark:text-ink'
+                    : 'border-ink/20 text-ink hover:border-copper hover:text-copper dark:border-paper/20 dark:text-paper'
+                }`}
+              >
+                {tag}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
+        {visibleProjects.length === 0 ? (
+          <p className="text-center text-ink/70 dark:text-paper/70">Nothing in this set yet.</p>
+        ) : (
+        <>
         {/* Main Project Display */}
         <div className="relative flex justify-center items-center mb-8">
           <motion.button
@@ -257,7 +308,7 @@ export default function Projects({ projects }) {
               className="w-full flex justify-center"
             >
               <ProjectCard
-                project={projects[currentIndex]}
+                project={visibleProjects[currentIndex]}
                 isActive
                 onView={() => goToProject(currentIndex)}
               />
@@ -281,7 +332,7 @@ export default function Projects({ projects }) {
           transition={{ duration: 0.4, delay: 0.3 }}
           className="flex justify-center gap-2 sm:gap-4 flex-wrap"
         >
-          {projects.map((project, index) => (
+          {visibleProjects.map((project, index) => (
             <motion.button
               key={project.title}
               whileHover={{ scale: 1.05 }}
@@ -290,8 +341,8 @@ export default function Projects({ projects }) {
               className={cn(
                 "relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden border-2 transition-all duration-200",
                 index === currentIndex
-                  ? "border-blue-600 scale-110 shadow-lg"
-                  : "border-gray-300 dark:border-gray-600 hover:border-blue-400"
+                  ? "border-copper scale-110 shadow-lg"
+                  : "border-ink/20 dark:border-paper/20 hover:border-copper"
               )}
             >
               <Image
@@ -321,9 +372,11 @@ export default function Projects({ projects }) {
           className="text-center mt-6"
         >
           <span className="text-sm text-gray-600 dark:text-gray-400">
-            {currentIndex + 1} of {projects.length}
+            {currentIndex + 1} of {visibleProjects.length}
           </span>
         </motion.div>
+        </>
+        )}
       </div>
     </section>
   );

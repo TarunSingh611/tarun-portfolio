@@ -33,7 +33,7 @@ export default function About({ aboutMe }) {
                         initial={{ opacity: 0, scale: 0.8 }}  
                         animate={isInView ? { opacity: 1, scale: 1 } : {}}  
                         transition={{ duration: 0.6, delay: 0.2 }}  
-                        className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"  
+                        className="mx-auto h-px w-16 bg-copper"  
                     />  
                 </motion.div>  
 

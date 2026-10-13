@@ -18,7 +18,7 @@ const Footer = ({ personal }) => {
   ];
 
   return (
-    <footer className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-16 overflow-hidden">
+    <footer className="relative overflow-hidden border-t border-ink/10 bg-ink py-16 text-paper dark:border-paper/10">
       {/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-full blur-3xl" />
@@ -36,7 +36,7 @@ const Footer = ({ personal }) => {
             viewport={{ once: true }}
             className="text-center md:text-left"
           >
-            <h3 className="text-2xl sm:text-3xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            <h3 className="mb-4 font-display text-3xl text-paper">
               {personal?.name}
             </h3>
             <p className="text-gray-300 mb-6 leading-relaxed">

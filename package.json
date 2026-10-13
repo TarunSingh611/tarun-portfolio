@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "node": ">=24.0.0 <25",
+    "node": ">=22.19.0",
     "npm": ">=10.0.0"
   },
   "scripts": {
@@ -26,16 +26,14 @@
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-toastify": "^11.1.0",
-    "tailwind-merge": "^2.2.1",
-    "three": "^0.186.1"
+    "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
     "@types/node": "^24",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/three": "^0.186.0",
     "autoprefixer": "^10",
-    "eslint": "^10.12.0",
+    "eslint": "^9.39.5",
     "eslint-config-next": "16.4.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",

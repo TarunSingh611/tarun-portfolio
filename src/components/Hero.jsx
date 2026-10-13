@@ -7,37 +7,13 @@ import { Github, Instagram, Linkedin, Twitter } from "@/components/BrandIcons";
 import { downloadCV } from "../lib/cvGenerator";
 import { toExternalHref } from "@/lib/utils";
 
-const PARTICLES = Array.from({ length: 50 }, (_, index) => ({
-  id: index,
-  left: `${(index * 37) % 100}%`,
-  top: `${(index * 53) % 100}%`,
-  duration: 2 + (index % 5) * 0.6,
-  delay: (index % 7) * 0.3,
-}));
-
-const FloatingParticles = () => (
-  <div className="absolute inset-0 overflow-hidden">
-    {PARTICLES.map((particle) => (
-      <motion.div
-        key={particle.id}
-        className="absolute w-1 h-1 bg-white/20 rounded-full"
-        style={{
-          left: particle.left,
-          top: particle.top,
-        }}
-        animate={{
-          y: [0, -100, 0],
-          opacity: [0, 1, 0],
-        }}
-        transition={{
-          duration: particle.duration,
-          repeat: Infinity,
-          delay: particle.delay,
-        }}
-      />
-    ))}
-  </div>
-);
+const studioIndex = [
+  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Selected work' },
+  { href: '#skills', label: 'Practice' },
+  { href: '#experience', label: 'Timeline' },
+  { href: '#contact', label: 'Contact' },
+];
 
 const Hero = ({ portfolioData }) => {
   const [isDownloading, setIsDownloading] = useState(false);
@@ -119,190 +95,115 @@ const Hero = ({ portfolioData }) => {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+      className="relative flex min-h-screen items-end overflow-hidden"
     >
-      {/* Floating Particles - Client-side only */}
-      <FloatingParticles />
-
-      {/* Gradient Orbs */}
-      <motion.div
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full blur-3xl"
-        animate={{
-          x: [0, 50, 0],
-          y: [0, -50, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-to-r from-blue-500/30 to-cyan-500/30 rounded-full blur-3xl"
-        animate={{
-          x: [0, -50, 0],
-          y: [0, 50, 0],
-        }}
-        transition={{
-          duration: 25,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-
-      <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl gap-12 px-4 pb-16 pt-32 sm:px-6 lg:grid-cols-[1.4fr_0.6fr] lg:px-8">
         <motion.div
-          initial={{ opacity: 0, y: 50 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="space-y-8 mt-20"
+          transition={{ duration: 0.7 }}
+          className="space-y-8"
         >
-          {/* Name and Title */}
-          <div className="space-y-4">
-            <motion.h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              {portfolioData.personal.name}
-            </motion.h1>
-            
-            <motion.div
-              className="text-xl sm:text-2xl lg:text-3xl font-medium text-gray-300"
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
-              <span className="text-white">I&apos;m a </span>
-              <span className="text-purple-400 min-h-[2rem] inline-block">
-                {displayText}
-                <span className="animate-pulse">|&nbsp;</span>
-              </span>
-              <span className="text-white">Developer</span>
-            </motion.div>
-          </div>
-
-          {/* Description */}
-          <motion.p
-            className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
+          <p className="text-xs uppercase tracking-[0.35em] text-copper">
+            {portfolioData.personal.location} / {portfolioData.personal.title}
+          </p>
+          <h1 className="font-display text-5xl leading-[0.95] text-ink dark:text-paper sm:text-7xl lg:text-8xl">
+            {portfolioData.personal.name}
+          </h1>
+          <p className="max-w-xl font-display text-2xl text-ink/80 dark:text-paper/80 sm:text-3xl">
+            {displayText}
+            <span className="text-copper">.</span>
+          </p>
+          <p className="max-w-2xl text-base leading-relaxed text-ink/70 dark:text-paper/70 sm:text-lg">
             {portfolioData.aboutMe.summary}
-          </motion.p>
-
-          {/* Action Buttons */}
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.8 }}
-          >
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
             <button
               onClick={handleDownloadCV}
               disabled={isDownloading}
-              className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center justify-center gap-2 bg-ink px-6 py-3 text-sm uppercase tracking-[0.18em] text-paper transition hover:bg-copper disabled:cursor-not-allowed disabled:opacity-50 dark:bg-paper dark:text-ink"
             >
               {isDownloading ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                  Generating CV...
-                </div>
+                'Preparing CV'
               ) : (
-                <div className="flex items-center gap-2">
-                  <Download className="w-5 h-5" />
+                <>
+                  <Download className="h-4 w-4" />
                   Download CV
-                </div>
+                </>
               )}
             </button>
-
             <button
               onClick={scrollToAbout}
-              className="group relative px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-105 transition-all duration-300"
+              className="border border-ink/20 px-6 py-3 text-sm uppercase tracking-[0.18em] text-ink transition hover:border-copper hover:text-copper dark:border-paper/20 dark:text-paper"
             >
-              Learn More
+              Enter the studio
             </button>
-          </motion.div>
-
-          {/* Social Links */}
-          <motion.div
-            className="flex justify-center items-center gap-6 pt-8"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 1.0 }}
-          >
+          </div>
+          <div className="flex items-center gap-4 pt-2">
             <a
               href={`mailto:${portfolioData.personal.email}`}
-              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              className="border border-ink/15 p-3 text-ink transition hover:border-copper hover:text-copper dark:border-paper/20 dark:text-paper"
               aria-label="Email"
             >
-              <Mail className="w-5 h-5 text-white group-hover:text-purple-300" />
+              <Mail className="h-4 w-4" />
             </a>
             
             <a
               href={toExternalHref(portfolioData.personal.linkedin)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              className="border border-ink/15 p-3 text-ink transition hover:border-copper hover:text-copper dark:border-paper/20 dark:text-paper"
               aria-label="LinkedIn"
             >
-              <Linkedin className="w-5 h-5 text-white group-hover:text-purple-300" />
+              <Linkedin className="h-4 w-4" />
             </a>
             
             <a
               href={toExternalHref(portfolioData.personal.github)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              className="border border-ink/15 p-3 text-ink transition hover:border-copper hover:text-copper dark:border-paper/20 dark:text-paper"
               aria-label="GitHub"
             >
-              <Github className="w-5 h-5 text-white group-hover:text-purple-300" />
+              <Github className="h-4 w-4" />
             </a>
             
             <a
               href={toExternalHref(portfolioData.personal.twitter)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              className="border border-ink/15 p-3 text-ink transition hover:border-copper hover:text-copper dark:border-paper/20 dark:text-paper"
               aria-label="Twitter"
             >
-              <Twitter className="w-5 h-5 text-white group-hover:text-purple-300" />
+              <Twitter className="h-4 w-4" />
             </a>
             
             <a
               href={toExternalHref(portfolioData.personal.instagram)}
               target="_blank"
               rel="noopener noreferrer"
-              className="group p-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 hover:bg-white/20 transform hover:scale-110 transition-all duration-300"
+              className="border border-ink/15 p-3 text-ink transition hover:border-copper hover:text-copper dark:border-paper/20 dark:text-paper"
               aria-label="Instagram"
             >
-              <Instagram className="w-5 h-5 text-white group-hover:text-purple-300" />
+              <Instagram className="h-4 w-4" />
             </a>
-          </motion.div>
+          </div>
         </motion.div>
-      </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 1 }}
-      >
-        <motion.div
-          className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center"
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <motion.div
-            className="w-1 h-3 bg-white/60 rounded-full mt-2"
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-        </motion.div>
-      </motion.div>
+        <nav aria-label="Studio index" className="hidden border-l border-ink/15 pl-8 lg:block dark:border-paper/15">
+          <p className="mb-6 text-xs uppercase tracking-[0.3em] text-ink/50 dark:text-paper/50">Index</p>
+          <ol className="space-y-4">
+            {studioIndex.map((item, index) => (
+              <li key={item.href}>
+                <a href={item.href} className="group flex items-baseline gap-4 text-ink dark:text-paper">
+                  <span className="font-mono text-xs text-copper">0{index + 1}</span>
+                  <span className="font-display text-2xl transition group-hover:text-copper">{item.label}</span>
+                </a>
+              </li>
+            ))}
+          </ol>
+        </nav>
+      </div>
     </section>
   );
 };

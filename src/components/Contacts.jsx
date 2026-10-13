@@ -36,7 +36,7 @@ export default function Contact({ contacts }) {
   return (
     <section id="contact" className="relative py-20 overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50/30 to-purple-50/30 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800" />
+      <div className="absolute inset-0 bg-paper dark:bg-ink" />
       
       {/* Floating elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -86,7 +86,7 @@ export default function Contact({ contacts }) {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="w-24 h-1 bg-gradient-to-r from-blue-600 to-purple-600 mx-auto rounded-full"
+            className="mx-auto h-px w-16 bg-copper"
           />
           <motion.p
             initial={{ opacity: 0, y: 20 }}

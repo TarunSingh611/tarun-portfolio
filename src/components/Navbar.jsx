@@ -2,7 +2,7 @@
 import { useState, useEffect, useSyncExternalStore } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Sun, Moon, Code } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const darkModeListeners = new Set();
@@ -90,16 +90,13 @@ export default function Navbar({ personal }) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link href="/" className="flex items-center space-x-2 group">
-                <div className="relative">
-                  <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-glow transition-all duration-300">
-                    <Code className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300 blur-xl"></div>
+              <Link href="/" className="flex items-center space-x-3 group">
+                <div className="flex h-10 w-10 items-center justify-center border border-ink text-xs tracking-[0.2em] text-ink dark:border-paper dark:text-paper">
+                  TS
                 </div>
                 <div className="hidden sm:block">
-                  <span className="text-xl font-bold text-gradient-primary">{personal?.name}</span>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">{personal?.title}</div>
+                  <span className="font-display text-xl text-ink dark:text-paper">{personal?.name}</span>
+                  <div className="text-xs uppercase tracking-[0.18em] text-copper">{personal?.title}</div>
                 </div>
               </Link>
             </motion.div>
@@ -115,10 +112,9 @@ export default function Navbar({ personal }) {
                 >
                   <button
                     onClick={() => scrollToSection(item.href)}
-                    className="relative px-4 py-2 text-gray-950 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-300 group"
+                    className="relative px-4 py-2 text-sm uppercase tracking-[0.16em] text-ink transition-colors duration-300 hover:text-copper dark:text-paper"
                   >
                     <span className="relative z-10">{item.label}</span>
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-purple-600/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </button>
                 </motion.div>
               ))}
